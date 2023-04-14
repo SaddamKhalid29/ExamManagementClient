@@ -68,6 +68,8 @@
 
                         <p:ajax event="rowEdit" listener="#{roomBean.onRowEdit}"  update=":form:msgs"/>
                         <p:ajax event="rowEditCancel" listener="#{roomBean.onRowCancel}" update=":form:msgs"/>
+                        <p:ajax event="rowEdit" listener="#{roomBean.updateRoom(product.roomID, product.roomNo, product.roomCapacity)}" update=":form:msgs"/>
+
 
                         <p:column headerText="Room ID" style="width:30%;text-align: center">
                             <p:cellEditor>

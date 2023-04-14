@@ -5,20 +5,20 @@ package com.uog.deptexammanagementsystem.student;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
  */
 import com.uog.exam.entity.StudentEntity;
-import com.uog.exam.student.DatabaseInconsistentStateException;
 import com.uog.exam.student.StudentManagerRemote;
 import com.uog.exam.student.StudentNotFoundException;
 import com.uog.exam.student.WrongParameterException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+//import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -27,7 +27,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @ManagedBean
 @ViewScoped
-public class StudentBean {
+public class StudentBean implements Serializable{
 
     /**
      * Creates a new instance of studentBean
@@ -43,6 +43,8 @@ public class StudentBean {
     private String studentContact;
     private List<StudentEntity> allStudentsList;
     private boolean globalFilterOnly;
+//    private List<StudentEntity> filterStudents;
+//    private String searchTerm;
 
     public StudentBean() {
     }
@@ -79,18 +81,32 @@ public class StudentBean {
         }
     }
 
-    public StudentEntity search(String name) {
-        StudentEntity studentEntity = null;
-        System.out.println("Searching Students with name " + name);
-        try {
-            studentEntity = studentManager.getStudentByName(name);
-            System.out.println("Students are found" + studentEntity.getStudentRollNo());
-            System.out.println("Students are found" + studentEntity.getStudentName());
-        } catch (StudentNotFoundException | DatabaseInconsistentStateException ex) {
-            Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return studentEntity;
-    }
+//    public StudentEntity search(String name) {
+//        StudentEntity studentEntity = null;
+//        System.out.println("Searching Students with name " + name);
+//        try {
+//            studentEntity = studentManager.getStudentByName(name);
+//            System.out.println("Students are found" + studentEntity.getStudentRollNo());
+//            System.out.println("Students are found" + studentEntity.getStudentName());
+//        } catch (StudentNotFoundException | DatabaseInconsistentStateException ex) {
+//            Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return studentEntity;
+//    }
+//    public void search() {
+//        setFilterStudents(allStudentsList.stream()
+//                .filter(student -> student.getStudentRollNo().contains(getSearchTerm()))
+//                .collect(Collectors.toList()));
+//        System.out.println("Search students is ok");
+//    }
+//    public void searchById(int stdId){
+//        try {
+//           StudentEntity studentEntity = studentManager.getStudentId(stdId);
+//            System.out.println("Student roll no is : "+studentEntity.getStudentRollNo());
+//        } catch (StudentNotFoundException ex) {
+//            Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     public void onRowEdit(RowEditEvent<StudentEntity> event) {
         FacesMessage msg = new FacesMessage("Student Edited", String.valueOf(event.getObject().getStudentID()));
@@ -267,4 +283,35 @@ public class StudentBean {
     public void setGlobalFilterOnly(boolean globalFilterOnly) {
         this.globalFilterOnly = globalFilterOnly;
     }
+
+    
+//    /**
+//     * @return the searchTerm
+//     */
+//    public String getSearchTerm() {
+//        return searchTerm;
+//    }
+//
+//    /**
+//     * @param searchTerm the searchTerm to set
+//     */
+//    public void setSearchTerm(String searchTerm) {
+//        this.searchTerm = searchTerm;
+//    }
+//
+//    /**
+//     * @return the filterStudents
+//     */
+//    public List<StudentEntity> getFilterStudents() {
+//        return filterStudents;
+//    }
+//
+//    /**
+//     * @param filterStudents the filterStudents to set
+//     */
+//    public void setFilterStudents(List<StudentEntity> filterStudents) {
+//        this.filterStudents = filterStudents;
+//    }
+    
+    
 }

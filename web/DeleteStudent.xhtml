@@ -49,7 +49,8 @@
                 <f:facet name="options">
                     <div class="ui-input-icon-left mr-2">
                         <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search" style="margin-right: 10px; margin-left: 5px;" />
+                        <p:inputText placeholder="Search" style="margin-right: 10px; margin-left: 5px;"/>
+                           
                         <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" style="margin-right: 10px;"/>
                     </div>
                 </f:facet>
@@ -57,9 +58,8 @@
             <br/>
             <p:fieldset legend="Delete Student">
 
-                <p:dataTable value="#{studentBean.allStudentsList}" var="students"
-                             widgetVar="studentsTable" emptyMessage="No student is found in the given criteria."
-                             globalFilter="#{studentBean.globalFilterOnly}">
+                <p:dataTable  value="#{studentBean.allStudentsList}" var="students"
+                             widgetVar="studentsTable" emptyMessage="No student is found in the given criteria.">
                     <f:facet name="header">
                         <div class="flex align-items-center justify-content-between">
                             <span>List of Rooms</span>
