@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <h:outputStylesheet library="css" name="examcss.css"/>
-        <title>Room Data</title>
+        <title>Course Update</title>
     </h:head>
     <h:body>
         <h:form id="form">
@@ -15,10 +15,10 @@
 
                 <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
                 <p:submenu label="Student" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="StudentWebPages/addStudent.xhtml"/>
-                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil"/>
+                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml"/>
+                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent.xhtml"/>
                     <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="StudentWebPages/DeleteStudent.xhtml"/>
+                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml"/>
                     <p:divider />
                     <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
                 </p:submenu>
@@ -38,7 +38,7 @@
                 </p:submenu>
                 <p:submenu label="Room" icon="pi pi-fw pi-map">
                     <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml"/>
-                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil"/>
+                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" />
                     <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
                     <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
                 </p:submenu>
@@ -54,50 +54,57 @@
                 </f:facet>
             </p:menubar>
             <br/>
-            <p:fieldset legend="Add Room">
+            <p:fieldset legend="Add Course">
                 <p:panelGrid columns="2">
                     <p:panelGrid columns="2">
-                        <p:outputLabel value="Room Number"/>
-                        <p:inputText value="#{roomBean.roomNo}"/>
-                        <p:outputLabel value="Room Capacity"/>
-                        <p:inputText value="#{roomBean.roomCapacity}"/>
-                    </p:panelGrid>
+                        <p:outputLabel value="Course Title"/>
+                        <p:inputText value="#{courseBean.courseTitle}"/>
+                        <p:outputLabel value="Course Code"/>
+                        <p:inputText value="#{courseBean.courseCode}"/>
+                        <p:outputLabel value="Credit Hours"/>
+                        <p:inputText value="#{courseBean.courseCreditHours}"/>
 
-                    <p:dataTable id="products1" var="product" value="#{roomBean.allRoomsList}" editable="true"
+                    </p:panelGrid>
+                    <p:dataTable id="products1" var="product" value="#{courseBean.allCoursesList}" editable="true"
                                  style="margin-bottom:20px">
 
-                        <p:ajax event="rowEdit" listener="#{roomBean.onRowEdit}"  update=":form:msgs"/>
-                        <p:ajax event="rowEditCancel" listener="#{roomBean.onRowCancel}" update=":form:msgs"/>
+                        <p:ajax event="rowEdit" listener="#{courseBean.onRowEdit}"  update=":form:msgs"/>
+                        <p:ajax event="rowEditCancel" listener="#{courseBean.onRowCancel}" update=":form:msgs"/>
+                        
+                        <p:ajax event="rowEdit" listener="#{courseBean.updateCourseData(product.courseID, product.courseTitle, product.courseCode, product.courseCredithrs)}"  update=":form:msgs"/>
 
-                        <p:column headerText="Room ID" style="width:30%;text-align: center">
+                        <p:column headerText="Course ID" style="width:30%;text-align: center">
+                            <h:outputText value="#{product.courseID}"/>
+
+                        </p:column>
+
+                        <p:column headerText="Course Title" style="width:30%;text-align: center">
                             <p:cellEditor>
                                 <f:facet name="output">
-                                    <h:outputText value="#{product.roomID}"/>
+                                    <h:outputText value="#{product.courseTitle}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText id="modelInput" value="#{product.roomID}" style="width:100%"/>
+                                    <p:inputText value="#{product.courseTitle}" style="width:100%" label="Name"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-
-                        <p:column headerText="Room No" style="width:30%;text-align: center">
+                        <p:column headerText="Course Code" style="width:30%;text-align: center">
                             <p:cellEditor>
                                 <f:facet name="output">
-                                    <h:outputText value="#{product.roomNo}"/>
+                                    <h:outputText value="#{product.courseCode}"/>
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{product.roomNo}" style="width:100%" label="Name"/>
+                                    <p:inputText value="#{product.courseCode}" style="width:100%" label="Name"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-
-                        <p:column headerText="Room Capacity"  style="width:30%;text-align: center">
+                        <p:column headerText="Credit Hours" style="width:30%;text-align: center">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{product.roomCapacity}"/></f:facet>
-
+                                <f:facet name="output">
+                                    <h:outputText value="#{product.courseCredithrs}"/>
+                                </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{product.roomCapacity}" style="width:100%" label="Name"/>
-
+                                    <p:inputText value="#{product.courseCredithrs}" style="width:100%" label="Name"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

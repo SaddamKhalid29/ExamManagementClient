@@ -6,14 +6,12 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <h:outputStylesheet library="css" name="examcss.css"/>
-        <title>Faculty Data</title>
+        <title>Course Data</title>
     </h:head>
     <h:body>
-        <h:form id="addFaculty">
+        <h:form id="deleteCourse">
             <p:growl id="messages"/>
-            <p:menubar>
-
-                <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
+            <p:menubar>  <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
                 <p:submenu label="Student" icon="pi pi-fw pi-user">
                     <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml"/>
                     <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil"/>
@@ -23,7 +21,7 @@
                     <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
                 </p:submenu>
 
-                <p:submenu label="Course" icon="pi pi-fw pi-book" >
+                <p:submenu label="Course" icon="pi pi-fw pi-book">
                     <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml"/>
                     <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil"/>
                     <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
@@ -54,43 +52,38 @@
                 </f:facet>
             </p:menubar>
             <br/>
-            <p:fieldset legend="Add Faculty">
-                <p:panelGrid columns="2">
-                    <p:panelGrid columns="2">
-                        <p:outputLabel value="Faculty Name"/>
-                        <p:inputText value="#{facultyBean.facultyName}"/>
-                        <p:outputLabel value="Faculty Designation"/>
-                        <p:inputText value="#{facultyBean.facultyDesignation}"/>
-                        <p:outputLabel value="Faculty Email"/>
-                        <p:inputText value="#{facultyBean.facultyEmail}"/>
-                        <p:outputLabel value="Faculty Contact"/>
-                        <p:inputText value="#{facultyBean.facultyContactNo}"/>
-                        <p:outputLabel value="Visiting"/>
-                        <p:inputText value="#{facultyBean.isVisiting}"/>
-                    </p:panelGrid>
-                    <p:dataTable value="#{facultyBean.getFacultyList}" var="faculties">
-                        <p:column headerText="Faculty ID" style="width:50%;text-align: left">
-                            <h:outputLabel value="#{faculties.facultyID}"/>
-                        </p:column>
-                        <p:column headerText="Faculty Name" style="width:100%;text-align: left">
-                            <h:outputLabel value="#{faculties.facultyName}"/>
-                        </p:column>
-                        <p:column headerText="Designation" style="width:80%;text-align: left">
-                            <h:outputLabel value="#{faculties.facultyDesignation}"/>
-                        </p:column>
-                        <p:column headerText="Faculty Email" style="width:100%;text-align: left">
-                            <h:outputLabel value="#{faculties.facultyEmail}"/>
-                        </p:column>
-                        <p:column headerText="Faculty Contact" style="width:80%;text-align: left">
-                            <h:outputLabel value="#{faculties.facultyContactNo}"/>
-                        </p:column>
-                        <p:column headerText="Visitinng" style="width:45%;text-align: center">
-                            <h:outputLabel value="#{faculties.facultyVisitingStatus}"/>
-                        </p:column>
-                    </p:dataTable>
-                </p:panelGrid>
-                <p:commandButton type="submit" value="Submit" action="#{facultyBean.addFaculty}" styleClass="submitClass" icon="pi pi-check"/>
+            <p:fieldset legend="Delete Course">
 
+                <p:dataTable value="#{courseBean.allCoursesList}" var="courses" widgetVar="coursesTables"
+                             emptyMessage="No course is found with in the given criteria" globalFilter="#{courseBean.globalFilterOnly}">
+                     <f:facet name="header">
+                        <div class="flex align-items-center justify-content-between">
+                            <span>List of Courses</span>
+                            <div>          
+                                <p:inputText id="globalFilter" onkeyup="PF('coursesTables').filter()" style="width:10rem"
+                                             placeholder="Search" />
+                                <p:commandButton value="Global Filter" update="@form" styleClass="globalFilterClass"
+                                                 action="#{courseBean.toggleGlobalFilter()}"/>
+                            </div>
+                        </div>
+
+                    </f:facet>
+                    <p:column headerText="Couse ID" filterBy="#{courses.courseID}" filterMatchMode="exact" style="width:20%;text-align: center">
+                        <h:outputLabel value="#{courses.courseID}"/>
+                    </p:column>
+                    <p:column headerText="Course Title" filterBy="#{courses.courseTitle}" filterMatchMode="contains" style="width:50%;text-align: left">
+                        <h:outputLabel value="#{courses.courseTitle}" />
+                    </p:column>
+                    <p:column headerText="Course Code" filterBy="#{courses.courseCode}" filterMatchMode="contains" style="width:30%;text-align: center">
+                        <h:outputLabel value="#{courses.courseCode}"/>
+                    </p:column>
+                    <p:column headerText="Credit Hours"   filterBy="#{courses.courseCredithrs}" filterMatchMode="exact" style="width:20%;text-align: center">
+                        <h:outputLabel value="#{courses.courseCredithrs}"/>
+                    </p:column>
+                    <p:column headerText="Action" style="width:30%;text-align: center">
+                        <h:commandLink value="Delete" action="#{courseBean.deletCourse(courses.courseID, courses)}"/>
+                    </p:column>
+                </p:dataTable>
             </p:fieldset>
         </h:form>
     </h:body>

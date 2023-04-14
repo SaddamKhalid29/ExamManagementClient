@@ -9,7 +9,7 @@
         <title>Faculty Data</title>
     </h:head>
     <h:body>
-        <h:form id="addFaculty">
+        <h:form id="deleteFaculty">
             <p:growl id="messages"/>
             <p:menubar>
 
@@ -54,43 +54,46 @@
                 </f:facet>
             </p:menubar>
             <br/>
-            <p:fieldset legend="Add Faculty">
-                <p:panelGrid columns="2">
-                    <p:panelGrid columns="2">
-                        <p:outputLabel value="Faculty Name"/>
-                        <p:inputText value="#{facultyBean.facultyName}"/>
-                        <p:outputLabel value="Faculty Designation"/>
-                        <p:inputText value="#{facultyBean.facultyDesignation}"/>
-                        <p:outputLabel value="Faculty Email"/>
-                        <p:inputText value="#{facultyBean.facultyEmail}"/>
-                        <p:outputLabel value="Faculty Contact"/>
-                        <p:inputText value="#{facultyBean.facultyContactNo}"/>
-                        <p:outputLabel value="Visiting"/>
-                        <p:inputText value="#{facultyBean.isVisiting}"/>
-                    </p:panelGrid>
-                    <p:dataTable value="#{facultyBean.getFacultyList}" var="faculties">
-                        <p:column headerText="Faculty ID" style="width:50%;text-align: left">
-                            <h:outputLabel value="#{faculties.facultyID}"/>
-                        </p:column>
-                        <p:column headerText="Faculty Name" style="width:100%;text-align: left">
-                            <h:outputLabel value="#{faculties.facultyName}"/>
-                        </p:column>
-                        <p:column headerText="Designation" style="width:80%;text-align: left">
-                            <h:outputLabel value="#{faculties.facultyDesignation}"/>
-                        </p:column>
-                        <p:column headerText="Faculty Email" style="width:100%;text-align: left">
-                            <h:outputLabel value="#{faculties.facultyEmail}"/>
-                        </p:column>
-                        <p:column headerText="Faculty Contact" style="width:80%;text-align: left">
-                            <h:outputLabel value="#{faculties.facultyContactNo}"/>
-                        </p:column>
-                        <p:column headerText="Visitinng" style="width:45%;text-align: center">
-                            <h:outputLabel value="#{faculties.facultyVisitingStatus}"/>
-                        </p:column>
-                    </p:dataTable>
-                </p:panelGrid>
-                <p:commandButton type="submit" value="Submit" action="#{facultyBean.addFaculty}" styleClass="submitClass" icon="pi pi-check"/>
+            <p:fieldset legend="Delete Faculty">
+                <p:dataTable value="#{facultyBean.getFacultyList}" var="faculties" widgetVar="facultyTables"
+                             emptyMessage="No faculty is found with in given criteria"
+                             globalFilter="#{facultyBean.globalFilterOnly}">
+                    <f:facet name="header">
+                        <div class="flex align-items-center justify-content-between">
+                            <span>List of Faculties</span>
+                            <div>          
+                                <p:inputText id="globalFilter" onkeyup="PF('facultyTables').filter()" style="width:10rem"
+                                             placeholder="Search" />
+                                <p:commandButton value="Global Filter" update="@form" styleClass="globalFilterClass"
+                                                 action="#{facultyBean.toggleGlobalFilter()}"/>
+                            </div>
+                        </div>
 
+                    </f:facet>
+                    <p:column headerText="Faculty ID" filterBy="#{faculties.facultyID}" filterMatchMode="exact" style="width:50%;text-align: left">
+                        <h:outputLabel value="#{faculties.facultyID}"/>
+                    </p:column>
+                    <p:column headerText="Faculty Name" filterBy="#{faculties.facultyName}" filterMatchMode="contains"  style="width:100%;text-align: left">
+                        <h:outputLabel value="#{faculties.facultyName}"/>
+                    </p:column>
+                    <p:column headerText="Designation" filterBy="#{faculties.facultyDesignation}" filterMatchMode="contains" style="width:80%;text-align: left">
+                        <h:outputLabel value="#{faculties.facultyDesignation}"/>
+                    </p:column>
+                    <p:column headerText="Faculty Email" filterBy="#{faculties.facultyEmail}" filterMatchMode="contains" style="width:100%;text-align: left">
+                        <h:outputLabel value="#{faculties.facultyEmail}"/>
+                    </p:column>
+                    <p:column headerText="Faculty Contact" filterBy="#{faculties.facultyContactNo}" filterMatchMode="contains"  style="width:80%;text-align: left">
+                        <h:outputLabel value="#{faculties.facultyContactNo}"/>
+                    </p:column>
+                    <p:column headerText="Visitinng" filterBy="#{faculties.facultyVisitingStatus}" filterMatchMode="exact" style="width:45%;text-align: center">
+                        <h:outputLabel value="#{faculties.facultyVisitingStatus}"/>
+                    </p:column>
+                    <p:column headerText="Action" style="width:50%;text-align: center">
+
+                        <h:commandLink value="Delete" action="#{facultyBean.deleteFaculty(faculties.facultyID, faculties)}" />
+
+                    </p:column>
+                </p:dataTable>
             </p:fieldset>
         </h:form>
     </h:body>

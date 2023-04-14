@@ -5,42 +5,43 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <h:outputStylesheet library="css" name="examcss.css"/>
         <title>Student Data</title>
     </h:head>
-    <h:body>
+    <h:body style="background-color: bisque;">
         <h:form id="addStudent">
-            <h:messages/>
-            <p:growl id="messages"/>
+            <h:messages id="msgs" globalOnly="false" showDetail="true"/>
+            <p:growl id="messages" showDetail="true" />
             <p:menubar>
 
                 <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
-                <p:submenu label="Student" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml"/>
+                <p:submenu label="Student" icon="pi pi-fw pi-user" >
+                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
                     <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil"/>
-                    <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash"/>
+                    <p:menuitem value="Search Student" icon="pi pi-fw pi-search" />
+                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
                     <p:divider />
                     <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
                 </p:submenu>
 
                 <p:submenu label="Course" icon="pi pi-fw pi-book" >
-                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCustomer.xhtml"/>
+                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
                     <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil"/>
                     <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash"/>
+                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
                 </p:submenu>
 
                 <p:submenu label="Faculty" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml"/>
+                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
                     <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil"/>
                     <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus"/>
+                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
                 </p:submenu>
                 <p:submenu label="Room" icon="pi pi-fw pi-map">
-                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml"/>
+                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
                     <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil"/>
                     <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"/>
+                    <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
                 </p:submenu>
 
                 <p:divider layout="vertical"/>
@@ -48,54 +49,64 @@
                 <f:facet name="options">
                     <div class="ui-input-icon-left mr-2">
                         <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search"/>
-                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
+                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" style="margin-right: 10px;"/>
                     </div>
                 </f:facet>
             </p:menubar>
             <br/>
             <p:fieldset legend="Add Student">
                 <p:panelGrid columns="2">
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="Student RollNo"/>
-                    <p:inputText id="rollNo" placeholder="Enter Student Roll No" value="#{studentBean.studentRollNo}" requiredMessage="Student RollNo is Required" required="true">
-                        <f:validateLength minimum="5" maximum="10" /> 
-                    </p:inputText>
-                    <p:outputLabel value="Student Name"/>
-                    <p:inputText value="#{studentBean.studentName}"/>
-                    <p:outputLabel value="Semester"/>
-                    <p:inputText value="#{studentBean.studentSemester}"/>
-                    <p:outputLabel value="Section"/>
-                    <p:inputText value="#{studentBean.studentSection}"/>
-                    <p:outputLabel value="Email"/>
-                    <p:inputText value="#{studentBean.studentEmail}"/>
-                    <p:outputLabel value="Student Address"/>
-                    <p:inputText value="#{studentBean.studentAddress}"/>
-                    <p:outputLabel value="Student Contact"/>
-                    <p:inputText value="#{studentBean.studentContact}"/>
-                    <h:commandButton type="submit" value="Submit" action="#{studentBean.addStudent}"/>
-                </p:panelGrid>
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="Student RollNo" styleClass="outputLabelClass" />
+                        <p:inputText id="rollNo" placeholder="Enter student roll no" value="#{studentBean.studentRollNo}"  requiredMessage="Student RollNo is Required" required="true">
+                            <f:validateLength minimum="5" maximum="15"/> 
+                            <p:tooltip for="rollNo" value="Enter student roll no" position="right"/>
+                        </p:inputText>
+                        <p:outputLabel value="Student Name" styleClass="outputLabelClass"/>
+                        <p:inputText id="name" placeholder="Enter student name" value="#{studentBean.studentName}">
+                            <p:tooltip for="name" value="Enter student name " position="right"/>
+                        </p:inputText>
+                        <p:outputLabel  value="Semester"  styleClass="outputLabelClass"/>
+                        <p:inputText id="semester" placeholder="Enter student semester" value="#{studentBean.studentSemester}"/>
+                        <p:outputLabel value="Section" styleClass="outputLabelClass"/>
+                        <p:inputText placeholder="Enter student section" value="#{studentBean.studentSection}"/>
+                        <p:outputLabel value="Email" styleClass="outputLabelClass"/>
+                        <p:inputText value="#{studentBean.studentEmail}" placeholder="Enter student email"/>
+                        <p:outputLabel value="Student Contact" styleClass="outputLabelClass"/>
+                        <p:inputText value="#{studentBean.studentContact}" placeholder="Enter student contact no"/>
+                    </p:panelGrid>
                     <p:dataTable value="#{studentBean.allStudentsList}" var="students">
-                        <p:column headerText="Student Name">
+
+                        <p:column headerText="ID" style="width:20%;text-align: center">
+                            <h:outputLabel value="#{students.studentID}"/>
+                        </p:column>  
+
+                        <p:column headerText="Student Name" sortBy="#{students.studentName}" style="width:80%;text-align: left">
                             <h:outputLabel value="#{students.studentName}"/>
                         </p:column>
-                        <p:column headerText="Student RollNo">
+
+                        <p:column headerText="Student Roll_No" style="width:65%;text-align: left">
                             <h:outputLabel value="#{students.studentRollNo}"/>
                         </p:column>
-                        <p:column headerText="Student Email">
+                        <p:column headerText="Student Email" style="width:100%;text-align: left">
                             <h:outputLabel value="#{students.studentEmail}"/>
                         </p:column>
-                        <p:column headerText="Student Contact">
+                        <p:column headerText="Contact" style="width:60%;text-align: left">
                             <h:outputLabel value="#{students.studentContactNo}"/>
                         </p:column>
-                        <p:column headerText="Student Semester">
+                        <p:column headerText="Semester" sortBy="#{students.studentSemester}" style="width:55%;text-align: center">
                             <h:outputLabel value="#{students.studentSemester}"/>
                         </p:column>
-                        <p:column headerText="Student Section">
+                        <p:column headerText="Section" sortBy="#{students.studentSection}" style="width:55%;text-align: center">
                             <h:outputLabel value="#{students.studentSection}"/>
                         </p:column>
+
                     </p:dataTable>
                 </p:panelGrid>
+                <p:commandButton type="submit" value="Submit" action="#{studentBean.addStudent()}" styleClass="submitClass" icon="pi pi-check"/>
+
             </p:fieldset>
         </h:form>
     </h:body>

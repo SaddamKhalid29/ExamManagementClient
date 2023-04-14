@@ -5,6 +5,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <h:outputStylesheet library="css" name="examcss.css"/>
         <title>Course Data</title>
     </h:head>
     <h:body>
@@ -15,29 +16,29 @@
                     <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml"/>
                     <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil"/>
                     <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash"/>
+                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml"/>
                     <p:divider />
                     <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
                 </p:submenu>
 
                 <p:submenu label="Course" icon="pi pi-fw pi-book">
-                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCustomer.xhtml"/>
+                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml"/>
                     <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil"/>
                     <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash"/>
+                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
                 </p:submenu>
 
                 <p:submenu label="Faculty" icon="pi pi-fw pi-user">
                     <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml"/>
                     <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil"/>
                     <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus"/>
+                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml"/>
                 </p:submenu>
                 <p:submenu label="Room" icon="pi pi-fw pi-map">
                     <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml"/>
                     <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil"/>
                     <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"/>
+                    <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
                 </p:submenu>
 
                 <p:divider layout="vertical"/>
@@ -45,23 +46,40 @@
                 <f:facet name="options">
                     <div class="ui-input-icon-left mr-2">
                         <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search"/>
-                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;" />
+                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" style="margin-right: 10px;"/>
                     </div>
                 </f:facet>
             </p:menubar>
             <br/>
             <p:fieldset legend="Add Course">
                 <p:panelGrid columns="2">
-                    <p:outputLabel value="Course Title"/>
-                    <p:inputText value="#{courseBean.courseTitle}"/>
-                    <p:outputLabel value="Course Code"/>
-                    <p:inputText value="#{courseBean.courseCode}"/>
-                    <p:outputLabel value="Credit Hours"/>
-                    <p:inputText value="#{courseBean.courseCreditHours}"/>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Course Title"/>
+                        <p:inputText value="#{courseBean.courseTitle}"/>
+                        <p:outputLabel value="Course Code"/>
+                        <p:inputText value="#{courseBean.courseCode}"/>
+                        <p:outputLabel value="Credit Hours"/>
+                        <p:inputText value="#{courseBean.courseCreditHours}"/>
 
-                    <h:commandButton type="submit" value="Submit" action="#{courseBean.addCourse()}"/>
+                    </p:panelGrid>
+                    <p:dataTable value="#{courseBean.allCoursesList}" var="courses">
+                        <p:column headerText="Couse ID" style="width:20%;text-align: center">
+                            <h:outputLabel value="#{courses.courseID}"/>
+                        </p:column>
+                        <p:column headerText="Course Title" style="width:50%;text-align: left">
+                            <h:outputLabel value="#{courses.courseTitle}" />
+                        </p:column>
+                        <p:column headerText="Course Code" style="width:30%;text-align: center">
+                            <h:outputLabel value="#{courses.courseCode}"/>
+                        </p:column>
+                        <p:column headerText="Credit Hours" style="width:20%;text-align: center">
+                            <h:outputLabel value="#{courses.courseCredithrs}"/>
+                        </p:column>
+                    </p:dataTable>
                 </p:panelGrid>
+                <p:commandButton type="submit" value="Submit" action="#{courseBean.addCourse()}" styleClass="submitClass" icon="pi pi-check"/>
+
             </p:fieldset>
         </h:form>
     </h:body>

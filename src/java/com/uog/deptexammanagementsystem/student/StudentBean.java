@@ -4,8 +4,8 @@ package com.uog.deptexammanagementsystem.student;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
  */
-
 import com.uog.exam.entity.StudentEntity;
+import com.uog.exam.student.DatabaseInconsistentStateException;
 import com.uog.exam.student.StudentManagerRemote;
 import com.uog.exam.student.StudentNotFoundException;
 import com.uog.exam.student.WrongParameterException;
@@ -18,6 +18,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -32,35 +34,91 @@ public class StudentBean {
      */
     @EJB
     StudentManagerRemote studentManager;
-    private String studentName ;
+    private String studentName;
     private String studentRollNo;
     private String studentAddress;
-    private String  studentSection;
+    private String studentSection;
     private String studentEmail;
     private int studentSemester;
     private String studentContact;
     private List<StudentEntity> allStudentsList;
-    
+    private boolean globalFilterOnly;
+
     public StudentBean() {
     }
-    public void addStudent(){
-        System.out.println("Adding student:"+this.studentName);
-        try {
-            studentManager.addNewStudent(studentRollNo, studentName, studentSemester, studentSection, studentEmail, studentContact);
-            System.out.println("Student is added successfully!");
-            System.out.println("Getting all of the students");
-        } catch (WrongParameterException ex) {
-            addMessage("Add Student",ex.getMessage());
-        }
-    }
+
     @PostConstruct
-    public void init(){
+    public void init() {
+
+        setGlobalFilterOnly(false);
         try {
-            allStudentsList=studentManager.getAllStudents();
+            allStudentsList = studentManager.getAllStudents();
         } catch (StudentNotFoundException ex) {
             Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void addStudent() {
+        System.out.println("Adding student:" + this.studentName);
+        try {
+            StudentEntity studentEntity = studentManager.addNewStudent(studentRollNo, studentName, studentSemester, studentSection, studentEmail, studentContact);
+            allStudentsList.add(studentEntity);
+            System.out.println("Student is added successfully!");
+            System.out.println("Getting all of the students");
+        } catch (WrongParameterException ex) {
+            addMessage("Add Student", ex.getMessage());
+        }
+    }
+
+    public void updateStudent(int stdId, String stdName, String stdRollNo, String stdEmail, String stdContact, int Semester, String stdSection) {
+        try {
+            studentManager.updateStudent(stdId, stdName, stdRollNo, stdEmail, stdContact, Semester, stdSection);
+            System.out.println("Student is updated sucessfully." + stdId);
+        } catch (StudentNotFoundException | WrongParameterException ex) {
+            Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public StudentEntity search(String name) {
+        StudentEntity studentEntity = null;
+        System.out.println("Searching Students with name " + name);
+        try {
+            studentEntity = studentManager.getStudentByName(name);
+            System.out.println("Students are found" + studentEntity.getStudentRollNo());
+            System.out.println("Students are found" + studentEntity.getStudentName());
+        } catch (StudentNotFoundException | DatabaseInconsistentStateException ex) {
+            Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return studentEntity;
+    }
+
+    public void onRowEdit(RowEditEvent<StudentEntity> event) {
+        FacesMessage msg = new FacesMessage("Student Edited", String.valueOf(event.getObject().getStudentID()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onRowCancel(RowEditEvent<StudentEntity> event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getStudentID()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public String deleteRecord(int id, StudentEntity studentEntity) {
+//        int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this item?", "Confirmation", JOptionPane.YES_NO_OPTION);
+//        if (result == JOptionPane.YES_OPTION) {
+        try {
+
+            allStudentsList.remove(studentEntity);
+            studentManager.deleteStudentById(id);
+            System.out.println("Successfully deleted");
+        } catch (StudentNotFoundException ex) {
+            Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        } else {
+//            System.out.println("Deletion operation canceled.");
+//        }
+        return null;
+    }
+
     /**
      * @return the studentName
      */
@@ -81,10 +139,12 @@ public class StudentBean {
     public String getStudentRollNo() {
         return studentRollNo;
     }
-    private void addMessage(String title,String detail){
-        FacesMessage msg=new FacesMessage(title,detail);
+
+    private void addMessage(String title, String detail) {
+        FacesMessage msg = new FacesMessage(title, detail);
         FacesContext.getCurrentInstance().addMessage("StudentBean", msg);
     }
+
     /**
      * @param studentRollNo the studentRollNo to set
      */
@@ -161,19 +221,23 @@ public class StudentBean {
     public void setStudentSemester(int studentSemester) {
         this.studentSemester = studentSemester;
     }
-    
-    public void submit(){
-       // StudentBean studeBean=new StudentBean();
+
+    public void toggleGlobalFilter() {
+        setGlobalFilterOnly(!isGlobalFilterOnly());
+    }
+
+    public void submit() {
+        // StudentBean studeBean=new StudentBean();
         System.out.println("*************************");
         System.out.println("***** Student data ******");
         System.out.println("*************************");
-        System.out.println("Student Roll No: "+studentRollNo);
-        System.out.println("Student Name : "+studentName);
-        System.out.println("Student Semester : "+studentSemester);
-        System.out.println("Student Section : "+studentSection);
-        System.out.println("Student Emaail : "+studentEmail);
-        System.out.println("Student Address : "+studentAddress);
-        System.out.println("Student Contact : "+studentContact);
+        System.out.println("Student Roll No: " + studentRollNo);
+        System.out.println("Student Name : " + studentName);
+        System.out.println("Student Semester : " + studentSemester);
+        System.out.println("Student Section : " + studentSection);
+        System.out.println("Student Emaail : " + studentEmail);
+        System.out.println("Student Address : " + studentAddress);
+        System.out.println("Student Contact : " + studentContact);
     }
 
     /**
@@ -188,5 +252,19 @@ public class StudentBean {
      */
     public void setAllStudentsList(List<StudentEntity> allStudentsList) {
         this.allStudentsList = allStudentsList;
+    }
+
+    /**
+     * @return the globalFilterOnly
+     */
+    public boolean isGlobalFilterOnly() {
+        return globalFilterOnly;
+    }
+
+    /**
+     * @param globalFilterOnly the globalFilterOnly to set
+     */
+    public void setGlobalFilterOnly(boolean globalFilterOnly) {
+        this.globalFilterOnly = globalFilterOnly;
     }
 }
