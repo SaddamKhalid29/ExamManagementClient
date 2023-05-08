@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputStylesheet library="css" name="examcss.css"/>
+        <title>Room Data</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+            <p:menubar>
+
+                <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
+                <p:submenu label="Student" icon="pi pi-fw pi-user" >
+                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
+                    <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
+                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
+                    <p:divider />
+                    <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
+                </p:submenu>
+
+                <p:submenu label="Course" icon="pi pi-fw pi-book" >
+                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
+                    <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
+                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
+                </p:submenu>
+
+                <p:submenu label="Faculty" icon="pi pi-fw pi-user">
+                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
+                    <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
+                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
+                </p:submenu>
+                <p:submenu label="Room" icon="pi pi-fw pi-map">
+                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
+                    <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
+                    <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
+                </p:submenu>
+
+                <p:divider layout="vertical"/>
+
+                <f:facet name="options">
+                    <div class="ui-input-icon-left mr-2">
+                        <i class="pi pi-fw pi-search" />
+                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
+                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" style="margin-right: 10px;"/>
+                    </div>
+                </f:facet>
+            </p:menubar>
+            <br/>
+            <p:fieldset legend="Add Room">
+                <p:panelGrid columns="2">
+
+
+                    <p:dataTable id="rooms1" var="room" value="#{roomBean.allRoomsList}" editable="true"
+                                 style="margin-bottom:20px" emptyMessage="No room is found with the given criteria"
+                                 widgetVar="roomsTable">
+                        <f:facet name="header">
+                            <div class="flex align-items-center justify-content-between">
+                                <span>List of Rooms</span>
+                                <div>          
+                                    <p:inputText id="globalFilter" onkeyup="PF('roomsTable').filter()" style="width:10rem"
+                                                 placeholder="Search Here" />
+                                    <p:commandButton value="Global Filter" update="@form" styleClass="globalFilterClass"
+                                                     action="#{roomBean.toggleGlobalFilter()}"/>
+                                </div>
+                            </div>
+
+                        </f:facet>
+
+                        <p:ajax event="rowEdit" listener="#{roomBean.onRowEdit}"  update=":form:msgs"/>
+                        <p:ajax event="rowEditCancel" listener="#{roomBean.onRowCancel}" update=":form:msgs"/>
+                        <p:ajax event="rowEdit" listener="#{roomBean.updateRoom(room.roomID, room.roomNo, room.roomCapacity)}" update=":form:msgs"/>
+
+
+                        <p:column headerText="Room ID" style="width:30%;text-align: center" filterBy="#{room.roomID}" filterMatchMode="exact">
+
+                            <h:outputText value="#{room.roomID}"/>
+
+                        </p:column>
+
+                        <p:column headerText="Room No" style="width:30%;text-align: center" filterBy="#{room.roomNo}" filterMatchMode="contains">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{room.roomNo}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{room.roomNo}" style="width:100%" label="Name"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Room Capacity"  style="width:30%;text-align: center" filterBy="#{room.roomCapacity}" filterMatchMode="contains">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{room.roomCapacity}"/></f:facet>
+
+                                <f:facet name="input">
+                                    <p:inputText value="#{room.roomCapacity}" style="width:100%" label="Name"/>
+
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Action" style="width:30%;text-align: center">
+                            <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:panelGrid>
+
+            </p:fieldset>
+        </h:form>
+
+        <footer>
+            <p align="center">&copy; 2023 Department Exam Management System</p>
+        </footer>
+    </h:body>
+</html>
+

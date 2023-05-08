@@ -38,6 +38,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 20px;
 }
 
+
+.myMenubar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+  background-color: appworkspace;
+}
+body {
+    width: 100%;
+    height:100%;
+    font-family: 'Open Sans', sans-serif;
+    background: #092756;
+    background-image: url("../resources/images/Login.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
 .submitClass{
     margin-top:2px;
     width:7%;
@@ -79,7 +97,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
         border-radius: 10px;
 
     }
-    
+
     @media(hover : hover){
         .globalFilterClass:hover{
             background-color: black;

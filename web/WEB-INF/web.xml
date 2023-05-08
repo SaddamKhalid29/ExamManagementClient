@@ -18,14 +18,14 @@
             30
         </session-timeout>
     </session-config>
-    <context-param>
+<!--    <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>sunny</param-value>
-        <!--<param-value>home</param-value>-->
-                <!--<param-value>humanity</param-value>-->
-        <!--        <param-value>afternoon</param-value>-->
-        <!--        <param-value>bootstrap</param-value>-->
-    </context-param>
+        <param-value>home</param-value>
+                <param-value>humanity</param-value>
+                <param-value>afternoon</param-value>
+                <param-value>bootstrap</param-value>
+    </context-param>-->
     <context-param>
         <param-name>primefaces.FONT_AWESOME</param-name>
         <param-value>true</param-value>
@@ -36,6 +36,6 @@
     </context-param>
     
     <welcome-file-list>
-        <welcome-file>addStudent.xhtml</welcome-file>
+        <welcome-file>Login.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>

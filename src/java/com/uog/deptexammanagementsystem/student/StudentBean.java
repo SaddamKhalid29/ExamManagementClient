@@ -27,7 +27,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @ManagedBean
 @ViewScoped
-public class StudentBean implements Serializable{
+public class StudentBean implements Serializable {
 
     /**
      * Creates a new instance of studentBean
@@ -65,6 +65,7 @@ public class StudentBean implements Serializable{
         try {
             StudentEntity studentEntity = studentManager.addNewStudent(studentRollNo, studentName, studentSemester, studentSection, studentEmail, studentContact);
             allStudentsList.add(studentEntity);
+
             System.out.println("Student is added successfully!");
             System.out.println("Getting all of the students");
         } catch (WrongParameterException ex) {
@@ -107,7 +108,6 @@ public class StudentBean implements Serializable{
 //            Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
     public void onRowEdit(RowEditEvent<StudentEntity> event) {
         FacesMessage msg = new FacesMessage("Student Edited", String.valueOf(event.getObject().getStudentID()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -284,7 +284,6 @@ public class StudentBean implements Serializable{
         this.globalFilterOnly = globalFilterOnly;
     }
 
-    
 //    /**
 //     * @return the searchTerm
 //     */
@@ -312,6 +311,4 @@ public class StudentBean implements Serializable{
 //    public void setFilterStudents(List<StudentEntity> filterStudents) {
 //        this.filterStudents = filterStudents;
 //    }
-    
-    
 }

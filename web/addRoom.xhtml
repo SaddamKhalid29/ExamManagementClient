@@ -14,31 +14,31 @@
             <p:menubar>
 
                 <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
-                <p:submenu label="Student" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="StudentWebPages/addStudent.xhtml"/>
-                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil"/>
+                <p:submenu label="Student" icon="pi pi-fw pi-user" >
+                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
                     <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="StudentWebPages/DeleteStudent.xhtml"/>
+                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
                     <p:divider />
                     <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
                 </p:submenu>
 
                 <p:submenu label="Course" icon="pi pi-fw pi-book" >
-                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml"/>
-                    <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil"/>
+                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
                     <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
                     <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
                 </p:submenu>
 
                 <p:submenu label="Faculty" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml"/>
-                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil"/>
+                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
                     <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml"/>
+                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
                 </p:submenu>
                 <p:submenu label="Room" icon="pi pi-fw pi-map">
-                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml"/>
-                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil"/>
+                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
                     <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
                     <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
                 </p:submenu>
@@ -48,7 +48,7 @@
                 <f:facet name="options">
                     <div class="ui-input-icon-left mr-2">
                         <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;" />
+                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
                         <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" style="margin-right: 10px;"/>
                     </div>
                 </f:facet>
@@ -66,9 +66,6 @@
                     <p:dataTable id="products1" var="product" value="#{roomBean.allRoomsList}" editable="true"
                                  style="margin-bottom:20px">
 
-                        <p:ajax event="rowEdit" listener="#{roomBean.onRowEdit}"  update=":form:msgs"/>
-                        <p:ajax event="rowEditCancel" listener="#{roomBean.onRowCancel}" update=":form:msgs"/>
-                        <p:ajax event="rowEdit" listener="#{roomBean.updateRoom(product.roomID, product.roomNo, product.roomCapacity)}" update=":form:msgs"/>
 
 
                         <p:column headerText="Room ID" style="width:30%;text-align: center">
@@ -103,15 +100,17 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column headerText="Action" style="width:30%;text-align: center">
-                            <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
-                        </p:column>
+
                     </p:dataTable>
                 </p:panelGrid>
                 <p:commandButton type="submit" value="Submit"  action="#{roomBean.addRoom(rooms)}" styleClass="submitClass" icon="pi pi-check"/>
 
             </p:fieldset>
         </h:form>
+
+        <footer>
+            <p align="center">&copy; 2023 Department Exam Management System</p>
+        </footer>
     </h:body>
 </html>
 

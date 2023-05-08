@@ -14,31 +14,31 @@
             <p:menubar>
 
                 <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
-                <p:submenu label="Student" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml"/>
-                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent.xhtml"/>
+                <p:submenu label="Student" icon="pi pi-fw pi-user" >
+                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
                     <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml"/>
+                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
                     <p:divider />
                     <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
                 </p:submenu>
 
                 <p:submenu label="Course" icon="pi pi-fw pi-book" >
-                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml"/>
-                    <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil"/>
+                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
                     <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
                     <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
                 </p:submenu>
 
                 <p:submenu label="Faculty" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml"/>
-                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil"/>
+                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
                     <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml"/>
+                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
                 </p:submenu>
                 <p:submenu label="Room" icon="pi pi-fw pi-map">
-                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml"/>
-                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" />
+                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
+                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
                     <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
                     <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
                 </p:submenu>
@@ -48,100 +48,101 @@
                 <f:facet name="options">
                     <div class="ui-input-icon-left mr-2">
                         <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;" />
+                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
                         <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" style="margin-right: 10px;"/>
                     </div>
                 </f:facet>
             </p:menubar>
             <br/>
             <p:fieldset legend="Update Faculty">
-                <p:panelGrid columns="2">
-                    <p:panelGrid columns="2">
-                        <p:outputLabel value="Faculty Name"/>
-                        <p:inputText value="#{facultyBean.facultyName}"/>
-                        <p:outputLabel value="Faculty Designation"/>
-                        <p:inputText value="#{facultyBean.facultyDesignation}"/>
-                        <p:outputLabel value="Faculty Email"/>
-                        <p:inputText value="#{facultyBean.facultyEmail}"/>
-                        <p:outputLabel value="Faculty Contact"/>
-                        <p:inputText value="#{facultyBean.facultyContactNo}"/>
-                        <p:outputLabel value="Visiting"/>
-                        <p:inputText value="#{facultyBean.isVisiting}"/>
-                    </p:panelGrid>
-                    <p:dataTable id="products1" var="faculty" value="#{facultyBean.getFacultyList}" editable="true"
-                                 style="margin-bottom:20px">
 
-                        <p:ajax event="rowEdit" listener="#{facultyBean.onRowEdit}"  update=":form:msgs"/>
-                        <p:ajax event="rowEditCancel" listener="#{facultyBean.onRowCancel}" update=":form:msgs"/>
+                <p:dataTable id="products1" var="faculty" value="#{facultyBean.getFacultyList}" editable="true"
+                             style="margin-bottom:20px" widgetVar="facultyTables"
+                             emptyMessage="No faculty is found with in given criteria">
+                    <f:facet name="header">
+                        <div class="flex align-items-center justify-content-between">
+                            <span>List of Faculties</span>
+                            <div>          
+                                <p:inputText id="globalFilter" onkeyup="PF('facultyTables').filter()" style="width:10rem"
+                                             placeholder="Search Here" />
+                                <p:commandButton value="Global Filter" update="@form" styleClass="globalFilterClass"
+                                                 action="#{facultyBean.toggleGlobalFilter()}"/>
+                            </div>
+                        </div>
 
-                        <p:ajax event="rowEdit" listener="#{facultyBean.updateFaculty(faculty.facultyID, faculty.facultyName, faculty.facultyDesignation, faculty.facultyEmail, faculty.facultyContactNo,faculty.facultyVisitingStatus)}"  update=":form:msgs"/>
+                    </f:facet>
 
-                        <p:column headerText="Faculty ID" style="width:30%;text-align: center">
-                            <h:outputText value="#{faculty.facultyID}"/>
+                    <p:ajax event="rowEdit" listener="#{facultyBean.onRowEdit}"  update=":form:msgs"/>
+                    <p:ajax event="rowEditCancel" listener="#{facultyBean.onRowCancel}" update=":form:msgs"/>
 
-                        </p:column>
+                    <p:ajax event="rowEdit" listener="#{facultyBean.updateFaculty(faculty.facultyID, faculty.facultyName, faculty.facultyDesignation, faculty.facultyEmail, faculty.facultyContactNo,faculty.facultyVisitingStatus)}"  update=":form:msgs"/>
 
-                        <p:column headerText="Faculty Name" style="width:30%;text-align: center">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{faculty.facultyName}"/>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{faculty.facultyName}" style="width:100%" label="Name"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        <p:column headerText="Designation" style="width:30%;text-align: center">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{faculty.facultyDesignation}"/>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{faculty.facultyDesignation}" style="width:100%" label="Name"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        <p:column headerText="Faculty Email" style="width:30%;text-align: center">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{faculty.facultyEmail}"/>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{faculty.facultyEmail}" style="width:100%" label="Name"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column> 
+                    <p:column headerText="Faculty ID" filterBy="#{faculty.facultyID}" filterMatchMode="exact" style="width:50%;text-align: left">
+                        <h:outputText value="#{faculty.facultyID}"/>
 
-                        <p:column headerText="Faculty Contact" style="width:30%;text-align: center">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{faculty.facultyContactNo}"/>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{faculty.facultyContactNo}" style="width:100%" label="Name"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
+                    </p:column>
 
-                        <p:column headerText="Visiting" style="width:30%;text-align: center">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{faculty.facultyVisitingStatus}"/>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{faculty.facultyVisitingStatus}" style="width:100%" label="Name"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        <p:column headerText="Action" style="width:30%;text-align: center">
-                            <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
-                        </p:column>
-                    </p:dataTable>
-                </p:panelGrid>
-                <p:commandButton type="submit" value="Submit"  action="#{roomBean.addRoom(rooms)}" styleClass="submitClass" icon="pi pi-check"/>
+                    <p:column headerText="Faculty Name" filterBy="#{faculty.facultyName}" filterMatchMode="contains" style="width:50%;text-align: left">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{faculty.facultyName}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{faculty.facultyName}" style="width:100%" label="Name"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Designation" filterBy="#{faculty.facultyDesignation}" filterMatchMode="contains" style="width:50%;text-align: left">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{faculty.facultyDesignation}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{faculty.facultyDesignation}" style="width:100%" label="Name"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Faculty Email" filterBy="#{faculty.facultyEmail}" filterMatchMode="contains" style="width:50%;text-align: left">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{faculty.facultyEmail}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{faculty.facultyEmail}" style="width:100%" label="Name"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column> 
 
+                    <p:column headerText="Faculty Contact" filterBy="#{faculty.facultyContactNo}" filterMatchMode="contains" style="width:50%;text-align: left">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{faculty.facultyContactNo}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{faculty.facultyContactNo}" style="width:100%" label="Name"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Visiting" filterBy="#{faculty.facultyVisitingStatus}" filterMatchMode="exact" style="width:50%;text-align: left">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{faculty.facultyVisitingStatus}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{faculty.facultyVisitingStatus}" style="width:100%" label="Name"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Action" style="width:30%;text-align: center">
+                        <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                    </p:column>
+                </p:dataTable>
             </p:fieldset>
         </h:form>
+        <footer>
+            <p align="center">&copy; 2023 Department Exam Management System</p>
+        </footer>
     </h:body>
 </html>
 

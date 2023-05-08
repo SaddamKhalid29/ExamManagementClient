@@ -153,5 +153,10 @@ public class RoomBean {
         FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getRoomID()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
+    
+    
+    public void toggleGlobalFilter() {
+        setGlobalFilterOnly(!isGlobalFilterOnly());
+    }
 
 }
