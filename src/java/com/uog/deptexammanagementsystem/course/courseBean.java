@@ -4,7 +4,9 @@ import com.uog.exam.course.CourseManagerRemote;
 import com.uog.exam.course.CourseNotFoundException;
 import com.uog.exam.course.WrongParameterException;
 import com.uog.exam.entity.CourseEntity;
+import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -13,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 import org.primefaces.event.RowEditEvent;
 
 
@@ -33,15 +36,25 @@ public class courseBean {
     private int courseCreditHours;
     private List<CourseEntity> allCoursesList;
     private boolean globalFilterOnly;
+    
+    private Part file;
+
+  
+    
+    
+    
     @EJB
     CourseManagerRemote courseManager;
 
     public void addCourse() {
         System.out.println("Course Name : " + this.courseTitle);
         try {
-           CourseEntity courseEntity =  courseManager.addCourse(courseTitle, courseCode, courseCreditHours);
+            CourseEntity courseEntity = courseManager.addCourse(courseTitle, courseCode, courseCreditHours);
             allCoursesList.add(courseEntity);
-            
+
+            courseTitle = null;
+            courseCode = null;
+            courseCreditHours = 0;
             System.out.println("Course is added...");
         } catch (WrongParameterException ex) {
             addMessage("Add Course", ex.getMessage());
@@ -61,23 +74,67 @@ public class courseBean {
     public courseBean() {
     }
 
+    
+    public void uploadCourseFile(){
+    
+        try {
+            
+            Scanner scan = new Scanner(file.getInputStream());
+            
+            CourseEntity courseEntity;
+            
+            while(scan.hasNextLine()){
+            
+                String nextLine = scan.nextLine();
+                
+                String[] courseData = nextLine.split(",");
+                
+                String courseTitle = courseData[0];
+                
+                String courseCode = courseData[1];
+                
+                int courseCreditHours = Integer.parseInt(courseData[2]);
+                
+                try {
+                    
+                    courseEntity = courseManager.addCourse(courseTitle, courseCode, courseCreditHours);
+                    
+                    if(courseEntity!= null){
+                    
+                        System.out.println("New Course is inserted successfully!" + courseTitle);
+                    }else{
+                    
+                        System.out.println("An error occured while inserting new course.");
+                    }
+                } catch (WrongParameterException ex) {
+                    Logger.getLogger(courseBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+       
+        } 
+        catch (IOException ex) {
+            Logger.getLogger(courseBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
     private void addMessage(String title, String detail) {
         FacesMessage msg = new FacesMessage(title, detail);
         FacesContext.getCurrentInstance().addMessage("CourseBean", msg);
     }
 
-    public void updateCourseData(int courseId, String courseTitle, String courseCode,int creditHours){
-        
+    public void updateCourseData(int courseId, String courseTitle, String courseCode, int creditHours) {
+
         try {
-            courseManager.updateCourseTitle(courseId, courseTitle,courseCode,creditHours);
-            System.out.println("Course Data is updated successfully." +courseId);
+            courseManager.updateCourseTitle(courseId, courseTitle, courseCode, creditHours);
+            System.out.println("Course Data is updated successfully." + courseId);
         } catch (CourseNotFoundException | WrongParameterException ex) {
             Logger.getLogger(courseBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    public void deletCourse(int courseId, CourseEntity courseEntity) {
+
+    public void deleteCourse(int courseId, CourseEntity courseEntity) {
         try {
             courseManager.deleteCourse(courseId);
             allCoursesList.remove(courseEntity);
@@ -128,17 +185,23 @@ public class courseBean {
         this.courseCreditHours = courseCreditHours;
     }
 
-    
-     public void toggleGlobalFilter() {
+    public void toggleGlobalFilter() {
         setGlobalFilterOnly(!isGlobalFilterOnly());
     }
-     
+
+    
+    
     public void submit() {
         System.out.println("****************************");
+    
         System.out.println("******* Courses Data *******");
+        
         System.out.println("****************************");
+        
         System.out.println("Course Title : " + courseTitle);
+        
         System.out.println("Course Code  : " + courseCode);
+        
         System.out.println("Credit Hours : " + courseCreditHours);
     }
 
@@ -163,20 +226,37 @@ public class courseBean {
         return globalFilterOnly;
     }
 
+    
+      public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
+    }
+    
+    
     /**
      * @param globalFilterOnly the globalFilterOnly to set
      */
     public void setGlobalFilterOnly(boolean globalFilterOnly) {
+        
         this.globalFilterOnly = globalFilterOnly;
-    }
     
+    }
+
     public void onRowEdit(RowEditEvent<CourseEntity> event) {
+        
         FacesMessage msg = new FacesMessage("Course Edited", String.valueOf(event.getObject().getCourseID()));
+        
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
+    
     public void onRowCancel(RowEditEvent<CourseEntity> event) {
+    
         FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getCourseID()));
+        
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 

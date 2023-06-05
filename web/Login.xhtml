@@ -12,15 +12,14 @@
             <h1>Login</h1>
             <form method="post" action="addStudent.xhtml">
                 <div>
-                <input type="text" name="user" placeholder="Username" required="required"/>
+                    <input type="text" name="user" value="#{loginBean.userName}" placeholder="Username" required="required"/>
                 </div>
-                <input type="password" name="pass" placeholder="Password" required="required" />
-                <button type="submit" class="btn btn-primary btn-block btn-large">Let me in.</button>
+                <input type="password" name="pass" value="#{loginBean.userPassword}" placeholder="Password" required="required" />
+                <h:commandButton value="Let me in." action="#{loginBean.authenticateUser()}" styleClass="btn btn-primary btn-block btn-large"/>
 
                 <div class="login-help">
                     <p>Forgot your password? <a href="#">Click here to reset it</a>.</p>
                 </div>
-                <a href="SignUp.xhtml" class="btn btn-primary btn-block btn-large">Sign Up</a>
             </form>
         </div>
     </h:body>

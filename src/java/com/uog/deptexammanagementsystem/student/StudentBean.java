@@ -5,11 +5,15 @@ package com.uog.deptexammanagementsystem.student;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
  */
 import com.uog.exam.entity.StudentEntity;
+import com.uog.exam.entity.UserEntity;
 import com.uog.exam.student.StudentManagerRemote;
 import com.uog.exam.student.StudentNotFoundException;
 import com.uog.exam.student.WrongParameterException;
+import com.uog.exam.users.UserMangerRemote;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //import java.util.stream.Collectors;
@@ -19,6 +23,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -34,6 +39,8 @@ public class StudentBean implements Serializable {
      */
     @EJB
     StudentManagerRemote studentManager;
+    @EJB
+    UserMangerRemote userManager;
     private String studentName;
     private String studentRollNo;
     private String studentAddress;
@@ -45,6 +52,8 @@ public class StudentBean implements Serializable {
     private boolean globalFilterOnly;
 //    private List<StudentEntity> filterStudents;
 //    private String searchTerm;
+
+    private Part file;
 
     public StudentBean() {
     }
@@ -63,8 +72,26 @@ public class StudentBean implements Serializable {
     public void addStudent() {
         System.out.println("Adding student:" + this.studentName);
         try {
+
+            //To add the student in the database
             StudentEntity studentEntity = studentManager.addNewStudent(studentRollNo, studentName, studentSemester, studentSection, studentEmail, studentContact);
             allStudentsList.add(studentEntity);
+            try {
+                //To add the new user in the database
+                UserEntity user = userManager.addUser(studentRollNo, "student12345", studentEmail, "student");
+                System.out.println("New user is added : " + user.getUserName());
+
+                //To rest the values in the frontend
+                studentName = null;
+                studentRollNo = null;
+                studentEmail = null;
+                studentSection = null;
+                studentSemester = 0;
+                studentContact = null;
+
+            } catch (com.uog.exam.users.WrongParameterException ex) {
+                Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             System.out.println("Student is added successfully!");
             System.out.println("Getting all of the students");
@@ -73,6 +100,43 @@ public class StudentBean implements Serializable {
         }
     }
 
+    //To upload the file data
+    public void uploadStudentFile() {
+        try {
+            StudentEntity studentEntity;
+            Scanner scan = new Scanner(file.getInputStream());
+            System.out.println("Student Data from file");
+
+            while (scan.hasNextLine()) {
+
+                String nextLine = scan.nextLine();
+                System.out.println(nextLine);
+                String[] stdData = nextLine.split(",");
+                String stdID = stdData[0];
+                String stdName = stdData[1];
+                String stdRollNo = stdData[2];
+                String stdContact = stdData[3];
+                String section = stdData[4];
+                int semester = Integer.parseInt(stdData[5]);
+                String email = stdData[6];
+                try {
+                    studentEntity = studentManager.addNewStudent(stdRollNo, stdName, semester, section, email, stdContact);
+                    if(studentEntity!= null){
+                        System.out.println("New students from file is successfully inserted!"+ stdID + stdName);
+                    }else{
+                        System.out.println("Unsuccessful to insert new student from file..");
+                    }
+                } catch (WrongParameterException ex) {
+                    Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //To update the student student
     public void updateStudent(int stdId, String stdName, String stdRollNo, String stdEmail, String stdContact, int Semester, String stdSection) {
         try {
             studentManager.updateStudent(stdId, stdName, stdRollNo, stdEmail, stdContact, Semester, stdSection);
@@ -108,16 +172,20 @@ public class StudentBean implements Serializable {
 //            Logger.getLogger(StudentBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
+    //This two methods will allow us to edit the row 
+    //If we click yes then  this method will be called
     public void onRowEdit(RowEditEvent<StudentEntity> event) {
         FacesMessage msg = new FacesMessage("Student Edited", String.valueOf(event.getObject().getStudentID()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
+    //If we cancel editing then this message will be called
     public void onRowCancel(RowEditEvent<StudentEntity> event) {
         FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getStudentID()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
+    //To remove the data from the database as well as from frontend
     public String deleteRecord(int id, StudentEntity studentEntity) {
 //        int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this item?", "Confirmation", JOptionPane.YES_NO_OPTION);
 //        if (result == JOptionPane.YES_OPTION) {
@@ -254,6 +322,14 @@ public class StudentBean implements Serializable {
         System.out.println("Student Emaail : " + studentEmail);
         System.out.println("Student Address : " + studentAddress);
         System.out.println("Student Contact : " + studentContact);
+    }
+
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
     }
 
     /**

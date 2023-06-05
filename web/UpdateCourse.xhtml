@@ -11,61 +11,69 @@
     <h:body>
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
-            <p:menubar>
+            <div style="background-color: ghostwhite;">
+                <p:menubar styleClass="myMenubar" style="margin-bottom:10px; padding-bottom: 20px; border:none; display: block; align-content: center;">
 
-                <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
-                <p:submenu label="Student" icon="pi pi-fw pi-user" >
-                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
-                    <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
-                    <p:divider />
-                    <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
-                </p:submenu>
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" action="Home.xhtml" immediate="true"/>
+                    <p:submenu label="Student" icon="pi pi-fw pi-user" >
+                        <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
+                        <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
+                        <p:divider />
+                        <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
+                    </p:submenu>
 
-                <p:submenu label="Course" icon="pi pi-fw pi-book" >
-                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
-                </p:submenu>
+                    <p:submenu label="Course" icon="pi pi-fw pi-book" >
+                        <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
+                    </p:submenu>
 
-                <p:submenu label="Faculty" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
-                </p:submenu>
-                <p:submenu label="Room" icon="pi pi-fw pi-map">
-                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
-                </p:submenu>
+                    <p:submenu label="Faculty" icon="pi pi-fw pi-user">
+                        <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
+                    </p:submenu>
+                    <p:submenu label="Room" icon="pi pi-fw pi-map">
+                        <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
+                    </p:submenu>
+                    <p:submenu label="Department" icon="pi pi-fw pi-map" >
+                        <p:menuitem value="New Department" icon="pi pi-fw pi-plus" action="addDepartment.xhtml" immediate="true"/>
+                        <p:menuitem value="Update" icon="pi pi-fw pi-pencil" action="UpdateDepartment.xhtml" immediate="true"/>
+                        <p:menuitem value="Search" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete" icon="pi pi-fw pi-trash"  action="DeleteDepartment.xhtml"/>
+                    </p:submenu>
+                    <p:divider layout="vertical"/>
 
-                <p:divider layout="vertical"/>
-
-                <f:facet name="options">
-                    <div class="ui-input-icon-left mr-2">
-                        <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
-                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" style="margin-right: 10px;"/>
-                    </div>
-                </f:facet>
-            </p:menubar>
+                    <f:facet name="options">
+                        <div class="ui-input-icon-left mr-2">
+                            <i class="pi pi-fw pi-search" />
+                            <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
+                            <p:button value="Logout" icon="pi pi-fw pi-sign-out" href="Login.xhtml" styleClass="ui-button-info"  style="margin-right: 10px;"/>
+                        </div>
+                    </f:facet>
+                </p:menubar>
+            </div>
             <br/>
-            <p:fieldset legend="Update Course">
+            <p:fieldset legend="Update Course" style="background-color: #e6e6e6; text-align: center; padding-bottom: 0px; border: 2px solid #6eb6de">
 
                 <p:dataTable id="courses1" var="course" value="#{courseBean.allCoursesList}" editable="true"
                              style="margin-bottom:20px" widgetVar="coursesTables"
                              emptyMessage="No course is found with in the given criteria">
                     <f:facet name="header">
-                        <div class="flex align-items-center justify-content-between">
-                            <span>List of Courses</span>
+                        <div class="flex align-items-center justify-content-between" style="text-align: center;">
+                            <span style="color: black; font-weight: bold;">List of Courses</span>
                             <div>          
                                 <p:inputText id="globalFilter" onkeyup="PF('coursesTables').filter()" style="width:10rem"
                                              placeholder="Search Here" />
-                                <p:commandButton value="Global Filter" update="@form" action="#{courseBean.toggleGlobalFilter()}" styleClass="globalFilterClass"/>
+                                <p:commandButton value="Global Filter" update="@form" action="#{courseBean.toggleGlobalFilter()}"
+                                                  style="margin-left: 20px;" styleClass="globalFilterClass"/>
                             </div>
                         </div>
 
@@ -76,12 +84,13 @@
 
                     <p:ajax event="rowEdit" listener="#{courseBean.updateCourseData(course.courseID, course.courseTitle, course.courseCode, course.courseCredithrs)}"  update=":form:msgs"/>
 
-                    <p:column headerText="Course ID" filterBy="#{course.courseID}" filterMatchMode="exact" style="width:20%;text-align: center">
+                    <p:column headerText="Course ID" filterBy="#{course.courseID}" filterMatchMode="exact" 
+                              style="width:20%;text-align:  center; border: 2px solid black; background-color: #e6e6e6;">
                         <h:outputText value="#{course.courseID}"/>
 
                     </p:column>
 
-                    <p:column headerText="Course Title" filterBy="#{course.courseTitle}" filterMatchMode="contains" style="width:50%;text-align: left">
+                    <p:column headerText="Course Title" filterBy="#{course.courseTitle}" filterMatchMode="contains" style="width:100%;text-align: left;  border: 2px solid black;">
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{course.courseTitle}"/>
@@ -91,34 +100,34 @@
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column headerText="Course Code" filterBy="#{course.courseCode}" filterMatchMode="contains" style="width:30%;text-align: center">
+                    <p:column headerText="Course Code" filterBy="#{course.courseCode}" filterMatchMode="contains" style="width:100%;text-align: left;  border: 2px solid black;">
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{course.courseCode}"/>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{course.courseCode}" style="width:100%" label="Name"/>
+                                <p:inputText value="#{course.courseCode}" style="width:100%" label="courdeCode"/>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column headerText="Credit Hours" filterBy="#{course.courseCredithrs}" filterMatchMode="match" style="width:30%;text-align: center" >
+                    <p:column headerText="Credit Hours" filterBy="#{course.courseCredithrs}" filterMatchMode="exact" style="width:100%;text-align: left;  border: 2px solid black;">
                         <p:cellEditor>
                             <f:facet name="output">
                                 <h:outputText value="#{course.courseCredithrs}"/>
                             </f:facet>
                             <f:facet name="input">
-                                <p:inputText value="#{course.courseCredithrs}" style="width:100%" label="Name"/>
+                                <p:inputText value="#{course.courseCredithrs}" style="width:100%" label="creditHours"/>
                             </f:facet>
                         </p:cellEditor>
                     </p:column>
-                    <p:column headerText="Action" style="width:30%;text-align: center">
+                    <p:column headerText="Action" style="width:30%;text-align: center;  border: 2px solid black;">
                         <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
                     </p:column>
                 </p:dataTable>
             </p:fieldset>
         </h:form>
         <footer>
-            
+
             <p align="center">&copy; 2023 Department Exam Management System</p>
         </footer>
     </h:body>

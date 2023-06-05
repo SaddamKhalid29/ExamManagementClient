@@ -9,93 +9,118 @@
         <title>Faculty Data</title>
     </h:head>
     <h:body>
-        <h:form id="addFaculty">
+        <h:form id="addFaculty" enctype="multipart/form-data">
             <p:growl id="messages"/>
-            <p:menubar>
+            <div style="background-color: ghostwhite;">
+                <p:menubar styleClass="myMenubar" style="margin-bottom:10px; padding-bottom: 20px; border:none; display: block; align-content: center;">
 
-                <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
-                <p:submenu label="Student" icon="pi pi-fw pi-user" >
-                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
-                    <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
-                    <p:divider />
-                    <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
-                </p:submenu>
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" action="Home.xhtml" immediate="true"/>
+                    <p:submenu label="Student" icon="pi pi-fw pi-user" >
+                        <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
+                        <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
+                        <p:divider />
+                        <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
+                    </p:submenu>
 
-                <p:submenu label="Course" icon="pi pi-fw pi-book" >
-                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
-                </p:submenu>
+                    <p:submenu label="Course" icon="pi pi-fw pi-book" >
+                        <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml" immediate="true"/>
+                    </p:submenu>
 
-                <p:submenu label="Faculty" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
-                </p:submenu>
-                <p:submenu label="Room" icon="pi pi-fw pi-map">
-                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
-                </p:submenu>
+                    <p:submenu label="Faculty" icon="pi pi-fw pi-user">
+                        <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
+                    </p:submenu>
+                    <p:submenu label="Room" icon="pi pi-fw pi-map">
+                        <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
+                    </p:submenu>
+                    <p:submenu label="Department" icon="pi pi-fw pi-map" >
+                        <p:menuitem value="New Department" icon="pi pi-fw pi-plus" action="addDepartment.xhtml" immediate="true"/>
+                        <p:menuitem value="Update" icon="pi pi-fw pi-pencil" action="UpdateDepartment.xhtml" immediate="true"/>
+                        <p:menuitem value="Search" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete" icon="pi pi-fw pi-trash"  action="DeleteDepartment.xhtml"/>
+                    </p:submenu>
+                    <p:divider layout="vertical"/>
 
-                <p:divider layout="vertical"/>
-
-                <f:facet name="options">
-                    <div class="ui-input-icon-left mr-2">
-                        <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
-                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" style="margin-right: 10px;"/>
-                    </div>
-                </f:facet>
-            </p:menubar>
+                    <f:facet name="options">
+                        <div class="ui-input-icon-left mr-2">
+                            <i class="pi pi-fw pi-search" />
+                            <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
+                            <p:button value="Logout" icon="pi pi-fw pi-sign-out" href="Login.xhtml" styleClass="ui-button-info"  style="margin-right: 10px;"/>
+                        </div>
+                    </f:facet>
+                </p:menubar>
+            </div>
             <br/>
-            <p:fieldset legend="Add Faculty">
+            <p:fieldset legend="Add Faculty" id="addFacultyData1" style="border: 1px solid black">
+                <p:panelGrid columns="2"  style="width: 100%;">
+                    <p:outputLabel value="Faculty Name" style="text-align: left;"/>
+                    <p:inputText value="#{facultyBean.facultyName}" placeholder="Enter Faculty Name Here"  required="true" requiredMessage="Faculty Name is Required!" style="width: 40%;"/>
+                    <p:outputLabel value="Faculty Designation"/>
+                    <p:inputText value="#{facultyBean.facultyDesignation}" placeholder="Enter Faculty Designation Here"  required="true" requiredMessage="Faculty Designation is Required!" style="width: 40%;"/>
+                    <p:outputLabel value="Faculty Email"/>
+                    <p:inputText value="#{facultyBean.facultyEmail}" placeholder="Enter Faculty Email Here"  required="true" requiredMessage="Faculty Email is Required!" style="width: 40%;"/>
+                    <p:outputLabel value="Faculty Contact"/>
+                    <p:inputText value="#{facultyBean.facultyContactNo}" placeholder="Enter Faculty Contact Here"  required="true" requiredMessage="Faculty ContactNo is Required!" style="width: 40%;"/>
+                    <p:outputLabel value="Visiting"/>
+                    <p:inputText id="status" value="#{facultyBean.isVisiting}" >
+                        <p:tooltip for="status" value="Visiting status can be either true or false" position="right"/>
+                    </p:inputText>
+
+                </p:panelGrid>
+                <br/>
+                <p:commandButton type="submit" value="Save" action="#{facultyBean.addFaculty}" update="addFacultyData1,allFacultyList1"
+                                 styleClass="submitClass" icon="pi pi-check"/>
+                <br/>
+
+                <h3 style="text-align: center">OR</h3>
+                <h:inputFile  value="#{facultyBean.file}"/>
+                <h:commandButton value="Upload" action="#{facultyBean.uploadFacultyFile()}"   styleClass="uploadBtn"/>
+
+
+            </p:fieldset>
+            <br/>
+            <p:fieldset legend="Faculty Record List" id="allFacultyList1"
+                        style="background-color: #e6e6e6; text-align: center; padding-bottom: 0px; border: 2px solid #6eb6de;">
                 <p:panelGrid columns="2">
-                    <p:panelGrid columns="2">
-                        <p:outputLabel value="Faculty Name"/>
-                        <p:inputText value="#{facultyBean.facultyName}"/>
-                        <p:outputLabel value="Faculty Designation"/>
-                        <p:inputText value="#{facultyBean.facultyDesignation}"/>
-                        <p:outputLabel value="Faculty Email"/>
-                        <p:inputText value="#{facultyBean.facultyEmail}"/>
-                        <p:outputLabel value="Faculty Contact"/>
-                        <p:inputText value="#{facultyBean.facultyContactNo}"/>
-                        <p:outputLabel value="Visiting"/>
-                        <p:inputText value="#{facultyBean.isVisiting}"/>
-                    </p:panelGrid>
+
                     <p:dataTable value="#{facultyBean.getFacultyList}" var="faculties">
-                        <p:column headerText="Faculty ID" style="width:50%;text-align: left">
+                        <p:column headerText="Faculty ID" style="width:50%;text-align: left; border: 2px solid black;">
                             <h:outputLabel value="#{faculties.facultyID}"/>
                         </p:column>
-                        <p:column headerText="Faculty Name" style="width:100%;text-align: left">
+                        <p:column headerText="Faculty Name" style="width:100%;text-align: left; border: 2px solid black;">
                             <h:outputLabel value="#{faculties.facultyName}"/>
                         </p:column>
-                        <p:column headerText="Designation" style="width:80%;text-align: left">
+                        <p:column headerText="Designation" style="width:80%;text-align: left; border: 2px solid black;">
                             <h:outputLabel value="#{faculties.facultyDesignation}"/>
                         </p:column>
-                        <p:column headerText="Faculty Email" style="width:100%;text-align: left">
+                        <p:column headerText="Faculty Email" style="width:100%;text-align: left; border: 2px solid black;">
                             <h:outputLabel value="#{faculties.facultyEmail}"/>
                         </p:column>
-                        <p:column headerText="Faculty Contact" style="width:80%;text-align: left">
+                        <p:column headerText="Faculty Contact" style="width:80%;text-align: left; border: 2px solid black;">
                             <h:outputLabel value="#{faculties.facultyContactNo}"/>
                         </p:column>
-                        <p:column headerText="Visitinng" style="width:45%;text-align: center">
+                        <p:column headerText="Visitinng" style="width:45%;text-align: center; border: 2px solid black;">
                             <h:outputLabel value="#{faculties.facultyVisitingStatus}"/>
                         </p:column>
                     </p:dataTable>
                 </p:panelGrid>
-                <p:commandButton type="submit" value="Submit" action="#{facultyBean.addFaculty}" styleClass="submitClass" icon="pi pi-check"/>
 
             </p:fieldset>
         </h:form>
-        <footer>
-            <p align="center">&copy; 2023 Department Exam Management System</p>
-        </footer>
+        <br/>
+        <div style="background: #e6e6e6; text-align: center; padding: 20px;">
+            <p> <b>Copyright © 2023 <a href="#">Department Exam Management System.</a> </b>All rights reserved</p>
+        </div>
     </h:body>
 </html>
 

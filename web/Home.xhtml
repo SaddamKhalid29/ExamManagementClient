@@ -5,12 +5,14 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        
         <h:outputStylesheet library="css" name="examcss.css"/>
-        <title>Room Data</title>
+        <h:outputStylesheet library="css" name="footer.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Home -Department Exam Management System</title>
     </h:head>
-    <h:body>
-        <h:form id="form" enctype="multipart/form-data">
-            <p:growl id="msgs" showDetail="true"/>
+    <h:body >
+        <h:form>
             <div style="background-color: ghostwhite;">
                 <p:menubar styleClass="myMenubar" style="margin-bottom:10px; padding-bottom: 20px; border:none; display: block; align-content: center;">
 
@@ -60,81 +62,41 @@
                     </f:facet>
                 </p:menubar>
             </div>
-            <br/>
-            <p:fieldset legend="Add Room" style='border: 1px solid black ' id="addRoomData1">
-                <p:panelGrid columns="2" style="width: 100%;">
-                    <p:outputLabel value="Room Number"/>
-                    <p:inputText value="#{roomBean.roomNo}" placeholder="Enter room number here" 
-                                 required="true" requiredMessage="Room no is required." style="width: 40%;"/>
-                    <p:outputLabel value="Room Capacity"/>
-                    <p:inputText value="#{roomBean.roomCapacity}" placeholder="Enter the capacity of a room" 
-                                 required="true" requiredMessage="The room capacity is required" style="width: 40%;" />
-                </p:panelGrid>
-                <br/>
-                <p:commandButton type="submit" value="Save"  action="#{roomBean.addRoom(rooms)}" styleClass="submitClass"
-                                 update="addRoomData1,AllRoomList1" icon="pi pi-check"/>
+            <div>
+                <p:fieldset legend="Seating Plan">
+                    <p:panelGrid columns="2">
+                        <p:dataTable>
+                            <p:column headerText="ID" style="width:20%;text-align: center">
+                                <h:outputLabel />
+                            </p:column>  
+                            <p:column headerText="Student Roll No" style="width:20%;text-align: center">
+                                <h:outputLabel />
+                            </p:column>  
+                            <p:column headerText="Student Name" style="width:20%;text-align: center">
+                                <h:outputLabel/>
+                            </p:column>  
+                            <p:column headerText="Room No" style="width:20%;text-align: center">
+                                <h:outputLabel />
+                            </p:column>  
+                            <p:column headerText="Section" style="width:20%;text-align: center">
+                                <h:outputLabel />
+                            </p:column>  
 
-                 <br/>
-
-                <h3 style="text-align: center">OR</h3>
-                <h:inputFile  value="#{roomBean.file}"/>
-                <h:commandButton value="Upload" action="#{roomBean.uploadRoomFile()}"   styleClass="uploadBtn"/>
-
-
-            </p:fieldset>
-            <br/>
-            <p:fieldset legend="All Rooms List" id="AllRoomList1" 
-                        style="background-color: #e6e6e6; text-align: center; padding-bottom: 0px; border: 2px solid #6eb6de;">
-
-                <p:panelGrid columns="2" style="border: 2px solid #6eb6de;">
-
-                    <p:dataTable id="products1" var="product" value="#{roomBean.allRoomsList}" editable="true"
-                                 style="margin-bottom:20px">
+                            <p:column headerText="Time" style="width:20%;text-align: center">
+                                <h:outputLabel />
+                            </p:column>  
+                            <p:column headerText="Notify" style="width:20%;text-align: center">
+                                <h:outputLabel />
+                            </p:column>  
 
 
+                        </p:dataTable>
 
-                        <p:column headerText="Room ID" style="width:30%;text-align: center; border: 2px solid black; background-color: #e6e6e6;">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{product.roomID}"/>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText id="modelInput" value="#{product.roomID}" style="width:100%"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
+                    </p:panelGrid>
 
-                        <p:column headerText="Room No" style="width:30%;text-align: center; border: 2px solid black;">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{product.roomNo}"/>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{product.roomNo}" style="width:100%" label="Name"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="Room Capacity"  style="width:30%;text-align: center; border: 2px solid black;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{product.roomCapacity}"/></f:facet>
-
-                                <f:facet name="input">
-                                    <p:inputText value="#{product.roomCapacity}" style="width:100%" label="Name"/>
-
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                    </p:dataTable>
-                </p:panelGrid>
-            </p:fieldset>
+                </p:fieldset>
+            </div>
         </h:form>
-        <br/>
-
-        <div style="background: #e6e6e6; text-align: center; padding: 20px;  margin-left: 0px; width: 100%;">
-            <p> <b>Copyright © 2023 <a href="#">Department Exam Management System.</a> </b>All rights reserved</p>
-        </div>
     </h:body>
 </html>
 

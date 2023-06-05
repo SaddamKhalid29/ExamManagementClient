@@ -42,7 +42,12 @@
                     <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
                     <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
                 </p:submenu>
-
+                <p:submenu label="Department" icon="pi pi-fw pi-map" >
+                    <p:menuitem value="New Department" icon="pi pi-fw pi-plus" action="addDepartment.xhtml" immediate="true"/>
+                    <p:menuitem value="Update" icon="pi pi-fw pi-pencil" action="UpdateDepartment.xhtml" immediate="true"/>
+                    <p:menuitem value="Search" icon="pi pi-fw pi-search"/>
+                    <p:menuitem value="Delete" icon="pi pi-fw pi-trash"  action="DeleteDepartment.xhtml"/>
+                </p:submenu>
                 <p:divider layout="vertical"/>
 
                 <f:facet name="options">
@@ -63,52 +68,52 @@
                         <p:inputText value="#{roomBean.roomCapacity}"/>
                     </p:panelGrid>
 
-                        <p:dataTable id="products1" var="product" value="#{roomBean.allRoomsList}" editable="true"
-                                     style="margin-bottom:20px">
+                    <p:dataTable id="products1" var="product" value="#{roomBean.allRoomsList}" editable="true"
+                                 style="margin-bottom:20px">
 
-                            <p:ajax event="rowEdit" listener="#{roomBean.onRowEdit}" update=":form:msgs"/>
-                            <p:ajax event="rowEditCancel" listener="#{roomBean.onRowCancel}" update=":form:msgs"/>
-                            <p:ajax event="rowEdit" listener="#{roomBean.updateRoom(product.roomID, product.roomNo, product.roomCapacity)}" update=":form:msgs"/>
+                        <p:ajax event="rowEdit" listener="#{roomBean.onRowEdit}" update=":form:msgs"/>
+                        <p:ajax event="rowEditCancel" listener="#{roomBean.onRowCancel}" update=":form:msgs"/>
+                        <p:ajax event="rowEdit" listener="#{roomBean.updateRoom(product.roomID, product.roomNo, product.roomCapacity)}" update=":form:msgs"/>
 
-                            <p:column headerText="Room ID" style="width:30%;text-align: center">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{product.roomID}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText id="modelInput" value="#{product.roomID}" style="width:100%"/>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
+                        <p:column headerText="Room ID" style="width:30%;text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{product.roomID}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="modelInput" value="#{product.roomID}" style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
-                            <p:column headerText="Room No" style="width:30%;text-align: center">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{product.roomNo}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText value="#{product.roomNo}" style="width:100%" label="Name"/>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
+                        <p:column headerText="Room No" style="width:30%;text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{product.roomNo}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{product.roomNo}" style="width:100%" label="Name"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
-                            <p:column headerText="Room Capacity"  style="width:30%;text-align: center">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{product.roomCapacity}"/></f:facet>
+                        <p:column headerText="Room Capacity"  style="width:30%;text-align: center">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{product.roomCapacity}"/></f:facet>
 
-                                    <f:facet name="input">
-                                        <p:inputText value="#{product.roomCapacity}" style="width:100%" label="Name"/>
+                                <f:facet name="input">
+                                    <p:inputText value="#{product.roomCapacity}" style="width:100%" label="Name"/>
 
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
 
 
-                            <p:column style="width:6rem">
-                                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
-                            </p:column>
-                        </p:dataTable>
+                        <p:column style="width:6rem">
+                            <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+                        </p:column>
+                    </p:dataTable>
                 </p:panelGrid>
                 <p:commandButton type="submit" value="Submit" action="#{roomBean.addRoom(rooms)}" styleClass="submitClass" icon="pi pi-check"/>
 

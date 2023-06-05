@@ -8,109 +8,133 @@
         <h:outputStylesheet library="css" name="examcss.css"/>
         <h:outputStylesheet library="css" name="footer.css"/>
         <title>Student Data</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     </h:head>
     <h:body style="background-color: bisque;">
-        <h:form id="addStudent">
+        <h:form id="addStudent" enctype="multipart/form-data">
             <h:messages id="msgs" globalOnly="false" showDetail="true"/>
             <p:growl id="messages" showDetail="true" />
-            <p:menubar styleClass="myMenubar">
+            <div style="background-color: ghostwhite;">
+                <p:menubar styleClass="myMenubar" style="margin-bottom:10px; padding-bottom: 20px; border:none; display: block; align-content: center;">
 
-                <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
-                <p:submenu label="Student" icon="pi pi-fw pi-user" >
-                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
-                    <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
-                    <p:divider />
-                    <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
-                </p:submenu>
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" action="Home.xhtml" immediate="true"/>
+                    <p:submenu label="Student" icon="pi pi-fw pi-user" >
+                        <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
+                        <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
+                        <p:divider />
+                        <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
+                    </p:submenu>
 
-                <p:submenu label="Course" icon="pi pi-fw pi-book" >
-                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
-                </p:submenu>
+                    <p:submenu label="Course" icon="pi pi-fw pi-book" >
+                        <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml" immediate="true"/>
+                    </p:submenu>
 
-                <p:submenu label="Faculty" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
-                </p:submenu>
-                <p:submenu label="Room" icon="pi pi-fw pi-map">
-                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
-                </p:submenu>
+                    <p:submenu label="Faculty" icon="pi pi-fw pi-user">
+                        <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
+                    </p:submenu>
+                    <p:submenu label="Room" icon="pi pi-fw pi-map">
+                        <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
+                    </p:submenu>
+                    <p:submenu label="Department" icon="pi pi-fw pi-map" >
+                        <p:menuitem value="New Department" icon="pi pi-fw pi-plus" action="addDepartment.xhtml" immediate="true"/>
+                        <p:menuitem value="Update" icon="pi pi-fw pi-pencil" action="UpdateDepartment.xhtml" immediate="true"/>
+                        <p:menuitem value="Search" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete" icon="pi pi-fw pi-trash"  action="DeleteDepartment.xhtml"/>
+                    </p:submenu>
+                    <p:divider layout="vertical"/>
 
-                <p:divider layout="vertical"/>
+                    <f:facet name="options">
+                        <div class="ui-input-icon-left mr-2">
+                            <i class="pi pi-fw pi-search" />
+                            <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
+                            <p:button value="Logout" icon="pi pi-fw pi-sign-out" href="Login.xhtml" styleClass="ui-button-info"  style="margin-right: 10px;"/>
+                        </div>
+                    </f:facet>
+                </p:menubar>
+            </div>
 
-                <f:facet name="options">
-                    <div class="ui-input-icon-left mr-2">
-                        <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
-                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" href="Login.xhtml" styleClass="ui-button-info"  style="margin-right: 10px;"/>
-                    </div>
-                </f:facet>
-            </p:menubar>
             <br/>
             <div >
-                <p:fieldset legend="Add Student">
-                    <p:panelGrid columns="2">
+                <p:fieldset legend="Add Student" style='border: 1px solid black ' id="addStudentData1">
+                    <p:panelGrid columns="2" style="width: 100%;" >
 
-                        <p:outputLabel value="Student RollNo" styleClass="outputLabelClass" />
-                        <p:inputText id="rollNo" placeholder="Enter student roll no" value="#{studentBean.studentRollNo}"  requiredMessage="Student RollNo is Required" required="true">
-                            <f:validateLength minimum="5" maximum="15"/> 
+                        <p:outputLabel value="Student RollNo" styleClass="outputLabelClass"  style="text-align: left;"/>
+                        <p:inputText id="rollNo" placeholder="Enter student roll no" value="#{studentBean.studentRollNo}" 
+                                     requiredMessage="Student RollNo is required" required="true"
+                                     style="width: 40%;">
+                            <f:validateLength minimum="5" maximum="15" /> 
                             <p:tooltip for="rollNo" value="Enter student roll no" position="right"/>
                         </p:inputText>
                         <p:outputLabel value="Student Name" styleClass="outputLabelClass"/>
-                        <p:inputText id="name" placeholder="Enter student name" value="#{studentBean.studentName}">
+                        <p:inputText id="name" placeholder="Enter student name" requiredMessage="Student name is required" 
+                                     required="true" value="#{studentBean.studentName}" style="width: 40%;">
                             <p:tooltip for="name" value="Enter student name " position="right"/>
                         </p:inputText>
                         <p:outputLabel  value="Semester"  styleClass="outputLabelClass"/>
-                        <p:inputText id="semester" placeholder="Enter student semester" value="#{studentBean.studentSemester}"/>
+                        <p:inputText id="semester" placeholder="Enter student semester" required="true" 
+                                     requiredMessage="Student Semester is required." value="#{studentBean.studentSemester}" style="width: 40%;">
+                            <p:tooltip for="semester" value="Student semester must be greater than 0 and less than 8" position="right"/>
+                        </p:inputText>
                         <p:outputLabel value="Section" styleClass="outputLabelClass"/>
-                        <p:inputText placeholder="Enter student section" value="#{studentBean.studentSection}"/>
+                        <p:inputText placeholder="Enter student section" required="true"
+                                     requiredMessage="Student Section is required." value="#{studentBean.studentSection}" style="width: 40%;"/>
                         <p:outputLabel value="Email" styleClass="outputLabelClass"/>
-                        <p:inputText value="#{studentBean.studentEmail}" placeholder="Enter student email"/>
+                        <p:inputText value="#{studentBean.studentEmail}" required="true" 
+                                     requiredMessage="Student Email is required." style="width: 40%;" placeholder="Enter student email"/>
                         <p:outputLabel value="Student Contact" styleClass="outputLabelClass"/>
-                        <p:inputText value="#{studentBean.studentContact}" placeholder="Enter student contact no"/>
+                        <p:inputText value="#{studentBean.studentContact}" required="true" 
+                                     requiredMessage="Student contact no is required." style="width: 40%;" placeholder="Enter student contact no"/>
                     </p:panelGrid>
                     <br/>
-                    <p:commandButton type="submit" value="Submit" action="#{studentBean.addStudent()}" styleClass="submitClass" icon="pi pi-check"/>
+                    <p:commandButton type="submit" value="Save"  action="#{studentBean.addStudent()}" styleClass="submitClass" icon="pi pi-check" update="addStudentData1,allStudentsList1"/>
+                    <br/>
+
+                    <h3 style="text-align: center">OR</h3>
+                    <h:inputFile  value="#{studentBean.file}"/>
+                    <h:commandButton value="Upload" action="#{studentBean.uploadStudentFile()}"   styleClass="uploadBtn"/>
 
                 </p:fieldset>
             </div>
             <br/>
             <div>
-                <p:fieldset legend="Record List">
+                <p:fieldset legend="Students Record List" id="allStudentsList1" style="background-color: #e6e6e6; text-align: center; padding-bottom: 0px; border: 2px solid #6eb6de;">
                     <p:panelGrid columns="2">
                         <p:dataTable value="#{studentBean.allStudentsList}" var="students">
 
-                            <p:column headerText="ID" style="width:20%;text-align: center">
+                            <p:column id="stdID" headerText="ID" style="width:20%;text-align: center; border: 2px solid black; background-color: #e6e6e6;">
                                 <h:outputLabel value="#{students.studentID}"/>
                             </p:column>  
 
-                            <p:column headerText="Student Name" sortBy="#{students.studentName}" style="width:80%;text-align: left">
+                            <p:column headerText="Student Name" sortBy="#{students.studentName}" style="width:80%;text-align: left; border: 2px solid black;">
                                 <h:outputLabel value="#{students.studentName}"/>
                             </p:column>
 
-                            <p:column headerText="Student Roll_No" style="width:65%;text-align: left">
+                            <p:column headerText="Student Roll_No" style="width:65%;text-align: left; border: 2px solid black;">
                                 <h:outputLabel value="#{students.studentRollNo}"/>
                             </p:column>
-                            <p:column headerText="Student Email" style="width:100%;text-align: left">
+                            <p:column headerText="Student Email" style="width:100%;text-align: left; border: 2px solid black;">
                                 <h:outputLabel value="#{students.studentEmail}"/>
                             </p:column>
-                            <p:column headerText="Contact" style="width:60%;text-align: left">
+                            <p:column headerText="Contact" style="width:60%;text-align: left;  border: 2px solid black;">
                                 <h:outputLabel value="#{students.studentContactNo}"/>
                             </p:column>
-                            <p:column headerText="Semester" sortBy="#{students.studentSemester}" style="width:55%;text-align: center">
+                            <p:column headerText="Semester" sortBy="#{students.studentSemester}" style="width:55%;text-align: center; border: 2px solid black;">
                                 <h:outputLabel value="#{students.studentSemester}"/>
                             </p:column>
-                            <p:column headerText="Section" sortBy="#{students.studentSection}" style="width:55%;text-align: center">
+                            <p:column headerText="Section" sortBy="#{students.studentSection}" style="width:55%;text-align: center; border: 2px solid black;">
                                 <h:outputLabel value="#{students.studentSection}"/>
                             </p:column>
 
@@ -120,74 +144,10 @@
             </div>
         </h:form>
         <br/>
-        <footer>
-            <div class="content">
-                <div class="top">
-                    <div class="logo-details">
-                        <i class="fab fa-slack"></i>
-                        <span class="logo_name">Department Exam Management System</span>
-                    </div>
-                    <div class="media-icons">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="link-boxes">
-                    <ul class="box">
-                        <li class="link_name">About UOG</li>
-                        <li>
-                            <p style="text-align: justify">
-                                The mission of UOG is to equip the youth in the areas of economy,
-                                social policy and research, so as to enable them to compete at the international level; 
-                                achieve excellence in research and teaching in all disciplines; 
-                                and develop a world class centre of excellence in the industrial triangle of Gujranwala.
-                            </p>
-                        </li>
-                    </ul>
-                    <ul class="box">
-                        <li class="link_name">Services</li>
-                        <li><a href="#">App design</a></li>
-                        <li><a href="#">Web design</a></li>
-                        <li><a href="#">Logo design</a></li>
-                        <li><a href="#">Banner design</a></li>
-                    </ul>
-                    <ul class="box">
-                        <li class="link_name">Account</li>
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="#">My account</a></li>
-                        <li><a href="#">Prefrences</a></li>
-                        <li><a href="#">Purchase</a></li>
-                    </ul>
-                    <ul class="box">
-                        <li class="link_name">Courses</li>
-                        <li><a href="#">HTML &amp; CSS</a></li>
-                        <li><a href="#">JavaScript</a></li>
-                        <li><a href="#">Photography</a></li>
-                        <li><a href="#">Photoshop</a></li>
-                    </ul>
-                    <ul class="box input-box">
-                        <li class="link_name">Subscribe</li>
-                        <li>
-                           <input type="text" placeholder="Enter your email" style="background-color: whitesmoke ; border: black solid 2px"/>    
-                        </li>
-                        <li><input type="button" value="Subscribe" /></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="bottom-details">
-                <div class="bottom_text">
-                    <span class="copyright_text">Copyright © 2021 <a href="#">Department Exam Management System.</a>All rights reserved</span>
-                    <span class="policy_terms">
-                        <a href="#">Privacy policy</a>
-                        <a href="#">Terms &amp; condition</a>
-                    </span>
-                </div>
-            </div>
-            <p align="center">&copy; 2023 Department Exam Management System</p>
-        </footer>
+
+        <div style="background: #e6e6e6; text-align: center; padding: 20px;">
+            <p> <b>Copyright © 2023 <a href="#">Department Exam Management System.</a> </b>All rights reserved</p>
+        </div>
     </h:body>
 </html>
 

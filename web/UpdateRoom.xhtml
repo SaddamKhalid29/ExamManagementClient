@@ -11,50 +11,57 @@
     <h:body>
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
-            <p:menubar>
+            <div style="background-color: ghostwhite;">
+                <p:menubar styleClass="myMenubar" style="margin-bottom:10px; padding-bottom: 20px; border:none; display: block; align-content: center;">
 
-                <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
-                <p:submenu label="Student" icon="pi pi-fw pi-user" >
-                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
-                    <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
-                    <p:divider />
-                    <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
-                </p:submenu>
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" action="Home.xhtml" immediate="true"/>
+                    <p:submenu label="Student" icon="pi pi-fw pi-user" >
+                        <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
+                        <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
+                        <p:divider />
+                        <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
+                    </p:submenu>
 
-                <p:submenu label="Course" icon="pi pi-fw pi-book" >
-                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
-                </p:submenu>
+                    <p:submenu label="Course" icon="pi pi-fw pi-book" >
+                        <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
+                    </p:submenu>
 
-                <p:submenu label="Faculty" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
-                </p:submenu>
-                <p:submenu label="Room" icon="pi pi-fw pi-map">
-                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
-                </p:submenu>
+                    <p:submenu label="Faculty" icon="pi pi-fw pi-user">
+                        <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
+                    </p:submenu>
+                    <p:submenu label="Room" icon="pi pi-fw pi-map">
+                        <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
+                    </p:submenu>
+                    <p:submenu label="Department" icon="pi pi-fw pi-map" >
+                        <p:menuitem value="New Department" icon="pi pi-fw pi-plus" action="addDepartment.xhtml" immediate="true"/>
+                        <p:menuitem value="Update" icon="pi pi-fw pi-pencil" action="UpdateDepartment.xhtml" immediate="true"/>
+                        <p:menuitem value="Search" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete" icon="pi pi-fw pi-trash"  action="DeleteDepartment.xhtml"/>
+                    </p:submenu>
+                    <p:divider layout="vertical"/>
 
-                <p:divider layout="vertical"/>
-
-                <f:facet name="options">
-                    <div class="ui-input-icon-left mr-2">
-                        <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
-                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" style="margin-right: 10px;"/>
-                    </div>
-                </f:facet>
-            </p:menubar>
+                    <f:facet name="options">
+                        <div class="ui-input-icon-left mr-2">
+                            <i class="pi pi-fw pi-search" />
+                            <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
+                            <p:button value="Logout" icon="pi pi-fw pi-sign-out" href="Login.xhtml" styleClass="ui-button-info"  style="margin-right: 10px;"/>
+                        </div>
+                    </f:facet>
+                </p:menubar>
+            </div>
             <br/>
-            <p:fieldset legend="Add Room">
+            <p:fieldset legend="Update Room" style="background-color: #e6e6e6; text-align: center; padding-bottom: 0px; border: 2px solid #6eb6de;">
                 <p:panelGrid columns="2">
 
 
@@ -62,13 +69,13 @@
                                  style="margin-bottom:20px" emptyMessage="No room is found with the given criteria"
                                  widgetVar="roomsTable">
                         <f:facet name="header">
-                            <div class="flex align-items-center justify-content-between">
-                                <span>List of Rooms</span>
+                            <div class="flex align-items-center justify-content-between" style="text-align: center;">
+                                <span style="color: black; font-weight: bold;">List of Rooms</span>
                                 <div>          
                                     <p:inputText id="globalFilter" onkeyup="PF('roomsTable').filter()" style="width:10rem"
                                                  placeholder="Search Here" />
                                     <p:commandButton value="Global Filter" update="@form" styleClass="globalFilterClass"
-                                                     action="#{roomBean.toggleGlobalFilter()}"/>
+                                                     style="margin-left: 20px;" action="#{roomBean.toggleGlobalFilter()}"/>
                                 </div>
                             </div>
 
@@ -79,13 +86,13 @@
                         <p:ajax event="rowEdit" listener="#{roomBean.updateRoom(room.roomID, room.roomNo, room.roomCapacity)}" update=":form:msgs"/>
 
 
-                        <p:column headerText="Room ID" style="width:30%;text-align: center" filterBy="#{room.roomID}" filterMatchMode="exact">
+                        <p:column headerText="Room ID" style="width:20%;text-align: center; border: 2px solid black; background-color: #e6e6e6;" filterBy="#{room.roomID}" filterMatchMode="exact">
 
                             <h:outputText value="#{room.roomID}"/>
 
                         </p:column>
 
-                        <p:column headerText="Room No" style="width:30%;text-align: center" filterBy="#{room.roomNo}" filterMatchMode="contains">
+                        <p:column headerText="Room No" style="width:30%;text-align: center; border: 2px solid black; " filterBy="#{room.roomNo}" filterMatchMode="contains">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{room.roomNo}"/>
@@ -96,7 +103,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Room Capacity"  style="width:30%;text-align: center" filterBy="#{room.roomCapacity}" filterMatchMode="contains">
+                        <p:column headerText="Room Capacity"  style="width:30%;text-align: center; border: 2px solid black;" filterBy="#{room.roomCapacity}" filterMatchMode="contains">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{room.roomCapacity}"/></f:facet>
 
@@ -106,7 +113,7 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column headerText="Action" style="width:30%;text-align: center">
+                        <p:column headerText="Action" style="width:20%;text-align: center; border: 2px solid black;">
                             <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
                         </p:column>
                     </p:dataTable>

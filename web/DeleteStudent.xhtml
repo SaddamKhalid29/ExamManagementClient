@@ -7,101 +7,110 @@
     <h:head>
         <h:outputStylesheet library="css" name="examcss.css"/>
         <title>Student Data</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </h:head>
     <h:body>
         <h:form id="deleteStudent">
             <h:messages id="msgs" globalOnly="false" showDetail="true"/>
             <p:growl id="messages" showDetail="true" />
-            <p:menubar>
+            <div style="background-color: ghostwhite;">
+                <p:menubar styleClass="myMenubar" style="margin-bottom:10px; padding-bottom: 20px; border:none; display: block; align-content: center;">
 
-                <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
-                <p:submenu label="Student" icon="pi pi-fw pi-user" >
-                    <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
-                    <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
-                    <p:divider />
-                    <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
-                </p:submenu>
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" action="Home.xhtml" immediate="true"/>
+                    <p:submenu label="Student" icon="pi pi-fw pi-user" >
+                        <p:menuitem value="New Student" icon="pi pi-fw pi-plus" action="addStudent.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Student" icon="pi pi-fw pi-pencil" action="UpdateStudent" immediate="true"/>
+                        <p:menuitem value="Search Student" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Student" icon="pi pi-fw pi-trash" action="DeleteStudent.xhtml" immediate="true"/>
+                        <p:divider />
+                        <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
+                    </p:submenu>
 
-                <p:submenu label="Course" icon="pi pi-fw pi-book" >
-                    <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
-                </p:submenu>
+                    <p:submenu label="Course" icon="pi pi-fw pi-book" >
+                        <p:menuitem value="New Course" icon="pi pi-fw pi-plus" action="addCourse.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Course" icon="pi pi-fw pi-pencil" action="UpdateCourse.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Course" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Course" icon="pi pi-fw pi-trash" action="DeleteCourse.xhtml"/>
+                    </p:submenu>
 
-                <p:submenu label="Faculty" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
-                </p:submenu>
-                <p:submenu label="Room" icon="pi pi-fw pi-map">
-                    <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
-                    <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
-                    <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
-                    <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
-                </p:submenu>
+                    <p:submenu label="Faculty" icon="pi pi-fw pi-user">
+                        <p:menuitem value="New Faculty" icon="pi pi-fw pi-user-plus" action="addFaculty.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Faculty" icon="pi pi-fw pi-pencil" action="UpdateFaculty.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Faculty" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Faculty" icon="pi pi-fw pi-user-minus" action="DeleteFaculty.xhtml" immediate="true"/>
+                    </p:submenu>
+                    <p:submenu label="Room" icon="pi pi-fw pi-map">
+                        <p:menuitem value="New Room" icon="pi pi-fw pi-plus" action="addRoom.xhtml" immediate="true"/>
+                        <p:menuitem value="Update Room" icon="pi pi-fw pi-pencil" action="UpdateRoom.xhtml" immediate="true"/>
+                        <p:menuitem value="Search Room" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete Room" icon="pi pi-fw pi-trash"  action="DeleteRoom.xhtml"/>
+                    </p:submenu>
+                    <p:submenu label="Department" icon="pi pi-fw pi-map" >
+                        <p:menuitem value="New Department" icon="pi pi-fw pi-plus" action="addDepartment.xhtml" immediate="true"/>
+                        <p:menuitem value="Update" icon="pi pi-fw pi-pencil" action="UpdateDepartment.xhtml" immediate="true"/>
+                        <p:menuitem value="Search" icon="pi pi-fw pi-search"/>
+                        <p:menuitem value="Delete" icon="pi pi-fw pi-trash"  action="DeleteDepartment.xhtml"/>
+                    </p:submenu>
+                    <p:divider layout="vertical"/>
 
-                <p:divider layout="vertical"/>
+                    <f:facet name="options">
+                        <div class="ui-input-icon-left mr-2">
+                            <i class="pi pi-fw pi-search" />
+                            <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
+                            <p:button value="Logout" icon="pi pi-fw pi-sign-out" href="Login.xhtml" styleClass="ui-button-info"  style="margin-right: 10px;"/>
+                        </div>
+                    </f:facet>
+                </p:menubar>
+            </div>
 
-                <f:facet name="options">
-                    <div class="ui-input-icon-left mr-2">
-                        <i class="pi pi-fw pi-search" />
-                        <p:inputText placeholder="Search"  style="margin-right: 10px; margin-left: 5px;"/>
-                        <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" style="margin-right: 10px;"/>
-                    </div>
-                </f:facet>
-            </p:menubar>
             <br/>
-            <p:fieldset legend="Delete Student">
+            <p:fieldset legend="Delete Student" style="background-color: #e6e6e6; text-align: center; padding-bottom: 0px; border: 2px solid #6eb6de;">
 
                 <p:dataTable  value="#{studentBean.allStudentsList}" var="students"
                               widgetVar="studentsTable" emptyMessage="No student is found in the given criteria.">
                     <f:facet name="header">
-                        <div class="flex align-items-center justify-content-between">
-                            <span>List of Students</span>
+                        <div class="flex align-items-center justify-content-between" style="text-align: center;">
+                            <span style="color: black; font-weight: bold;">List of Students</span>
                             <div>          
                                 <p:inputText id="globalFilter" onkeyup="PF('studentsTable').filter()" style="width:10rem"
                                              placeholder="Search Here" />
                                 <p:commandButton value="Global Filter" update="@form" styleClass="globalFilterClass"
-                                                 action="#{studentBean.toggleGlobalFilter()}"/>
+                                                 style="margin-left: 20px;" action="#{studentBean.toggleGlobalFilter()}"/>
                             </div>
                         </div>
 
                     </f:facet>
                     <p:column headerText="Student ID" filterBy="#{students.studentID}" 
-                              style="width:50%;text-align: center" filterMatchMode="exact">
+                              style="width:50%;text-align: center; border: 2px solid black; background-color: #e6e6e6;" filterMatchMode="exact">
                         <h:outputLabel value="#{students.studentID}"/>
                     </p:column>  
 
                     <p:column headerText="Student Name" filterBy="#{students.studentName}" filterMatchMode="contains"
-                              sortBy="#{students.studentName}" style="width:100%;text-align: left">
+                              sortBy="#{students.studentName}" style="width:100%;text-align: left;  border: 2px solid black;">
                         <h:outputLabel value="#{students.studentName}" />
                     </p:column>
 
                     <p:column headerText="Student Roll_No" filterBy="#{students.studentRollNo}" 
-                              filterMatchMode="contains" style="width:100%;text-align:left;">
+                              filterMatchMode="contains" style="width:60%;text-align: left;  border: 2px solid black;">
                         <h:outputLabel value="#{students.studentRollNo}"/>
                     </p:column>
                     <p:column headerText="Student Email" filterBy="#{students.studentEmail}" filterMatchMode="contains" 
-                              style="width:100%;text-align: left;">
+                              style="width:100%;text-align: left;  border: 2px solid black;">
                         <h:outputLabel value="#{students.studentEmail}"/>
                     </p:column>
                     <p:column headerText="Student Contact" filterBy="#{students.studentContactNo}" filterMatchMode="contains" 
-                              style="width:100%;text-align: left;">
+                              style="width:60%;text-align: left;  border: 2px solid black;">
                         <h:outputLabel value="#{students.studentContactNo}"/>
                     </p:column>
                     <p:column headerText="Semester" filterBy="#{students.studentSemester}" filterMatchMode="exact"
-                              sortBy="#{students.studentSemester}" style="width:50%;text-align: center">
+                              sortBy="#{students.studentSemester}" style="width:50%;text-align: center; border: 2px solid black;" >
                         <h:outputLabel value="#{students.studentSemester}"/>
                     </p:column>
                     <p:column headerText="Section" filterBy="#{students.studentSection}" filterMatchMode="exact" 
-                              sortBy="#{students.studentSection}" style="width:50%;text-align: center">
+                              sortBy="#{students.studentSection}" style="width:50%;text-align: center;  border: 2px solid black;">
                         <h:outputLabel value="#{students.studentSection}"/>
                     </p:column>
-                    <p:column headerText="Action" style="width:50%;text-align: center">
+                    <p:column headerText="Action" style="width:50%;text-align: left;  border: 2px solid black;">
 
                         <h:commandLink value="Delete" action="#{studentBean.deleteRecord(students.studentID,students)}" />
 
@@ -109,8 +118,11 @@
                 </p:dataTable>
             </p:fieldset>
         </h:form>
+        <br/>
         <footer>
-            <p align="center">&copy; 2023 Department Exam Management System</p>
+            <div style="background: #e6e6e6; text-align: center; padding: 20px; margin-top: 7px;">
+                <p> <b>Copyright © 2023 <a href="#">Department Exam Management System.</a> </b>All rights reserved</p>
+            </div>
         </footer>
     </h:body>
 </html>
