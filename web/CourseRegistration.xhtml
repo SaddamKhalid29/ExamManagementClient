@@ -5,22 +5,38 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+
+        <h:outputStylesheet library="css" name="examcss.css"/>
         <title>Register Course</title>
     </h:head>
     <h:body>
 
         <h:form>
-            <h:selectOneMenu value="#{courseRegistrationBean.stdID}">
-                <f:selectItems value="#{courseRegistrationBean.studentList}" var="student"
-                               itemValue="#{student.studentID}" itemLabel="#{student.studentName}" />
-            </h:selectOneMenu>
+            <p:fieldset legend="Register Course" id="registerStudentCourse">
 
-            <h:selectOneMenu value="#{courseRegistrationBean.courseID}">
-                <f:selectItems value="#{courseRegistrationBean.courseList}" var="course"
-                               itemValue="#{course.courseID}" itemLabel="#{course.courseTitle}" />
-            </h:selectOneMenu>
+                <p:panelGrid columns="2">
 
-            <h:commandButton value="Register" action="#{courseRegistrationBean.assignCourseToStudent()}" />
+                    <p:outputLabel value="Student Roll No" />
+                    <h:selectOneMenu value="#{courseRegistrationBean.student}">
+                        <f:selectItems value="#{courseRegistrationBean.studentList}" var="student"
+                                       itemValue="#{student.studentID}" itemLabel="#{student.studentRollNo}" />
+                    </h:selectOneMenu>
+
+                    <p:outputLabel value="Course Code" />
+                    <h:selectOneMenu value="#{courseRegistrationBean.course}">
+                        <f:selectItems value="#{courseRegistrationBean.courseList}" var="course"
+                                       itemValue="#{course.courseID}" itemLabel="#{course.courseCode}" />
+                    </h:selectOneMenu>
+
+                    <p:outputLabel value="Registration Year"/>
+                    <p:inputText value="#{courseRegistrationBean.courseRegYear}" placeholder="Enter your semester year"/>
+                </p:panelGrid>
+
+
+                <h:commandButton value="Register" action="#{courseRegistrationBean.assignCourseToStudent}" styleClass="submitClass" />
+
+
+            </p:fieldset>
         </h:form>
 
     </h:body>
