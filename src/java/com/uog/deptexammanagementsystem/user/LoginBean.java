@@ -14,14 +14,17 @@ package com.uog.deptexammanagementsystem.user;
  */
 import com.uog.exam.entity.UserEntity;
 import com.uog.exam.users.UserMangerRemote;
+import com.uog.exam.users.UserNotFoundException;
 import com.uog.exam.users.WrongParameterException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
@@ -29,11 +32,12 @@ import javax.faces.context.FacesContext;
  * @author arahman
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class LoginBean implements Serializable {
 
     @EJB
     UserMangerRemote userManager;
+
     private String userEmail;
     private String subscriberPassword;
     private String userName;
@@ -41,25 +45,67 @@ public class LoginBean implements Serializable {
     private UserEntity user;
     private int serviceId;
 
-    public String authenticateUser() {
+    public void authenticateUser(UserEntity user) {
         System.out.println("Calling authenticate user");
-       
+
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         try {
-           UserEntity u = userManager.loginUser(userName, userPassword);
-            System.out.println("the user is : " + u.getUserName() + u.getUserType());
+            System.out.println("Welcome into user authenticate method....");
+
+            try {
+
+                user = userManager.findUserByUserName(userName);
+
+                String password = user.getUserPassword();
+
+                if (password.equals(userPassword)) {
+
+                    System.out.println("Login Successfully!");
+
+                    if ("admin".equals(user.getUserType())) {
+
+                        try {
+                            externalContext.redirect("addStudent.xhtml");
+
+                        } catch (IOException ex) {
+                            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    if ("student".equals(user.getUserType()) || "faculty".equals(user.getUserType())) {
+
+                        try {
+                            externalContext.redirect("Home.xhtml");
+                        } catch (IOException ex) {
+                            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } else {
+
+                    System.out.println("Username or password is incorrect!");
+               
+                    throw new WrongParameterException("Username or password is incorrect!");
+                }
+            } catch (UserNotFoundException ex) {
+                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+//            user = userManager.loginUser(userName, userPassword);
+//
+//            System.out.println("the user is : " + user.getUserName() + user.getUserType());
             setUser(user);
-            if (u == null) {
+            if (user == null) {
                 FacesContext.getCurrentInstance().addMessage(null,
                         new FacesMessage("Wrong password."));
-                return "No user";
-            }else{
-            System.out.println("The user is here"+u.getUserName());
+                System.out.println("No user is here");
+            } else {
+                System.out.println("The user is here" + user.getUserName());
             }
         } catch (WrongParameterException ex) {
+            System.out.println("This is the exception");
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Redirecting to Dashboard");
-        return "Welcome here";
+
     }
 
     public void addUser() throws WrongParameterException {

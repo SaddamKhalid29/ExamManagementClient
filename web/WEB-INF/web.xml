@@ -18,7 +18,7 @@
             30
         </session-timeout>
     </session-config>
-<!--    <context-param>
+    <!--    <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>sunny</param-value>
         <param-value>home</param-value>
@@ -26,6 +26,11 @@
                 <param-value>afternoon</param-value>
                 <param-value>bootstrap</param-value>
     </context-param>-->
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>application/font-sfnt</mime-type>
+    </mime-mapping>
+
     <context-param>
         <param-name>primefaces.FONT_AWESOME</param-name>
         <param-value>true</param-value>

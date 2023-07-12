@@ -10,18 +10,22 @@
     <h:body>
         <div class="login">
             <h1>Login</h1>
-            <form method="post" action="addStudent.xhtml">
-                <div>
-                    <input type="text" name="user" value="#{loginBean.userName}" placeholder="Username" required="required"/>
-                </div>
-                <input type="password" name="pass" value="#{loginBean.userPassword}" placeholder="Password" required="required" />
-                <h:commandButton value="Let me in." action="#{loginBean.authenticateUser()}" styleClass="btn btn-primary btn-block btn-large"/>
+            <h:form>
+                <h:outputLabel for="username" value="Username:" />
+                <h:inputText id="username" value="#{loginBean.userName}" alt="Enter username here" required="true" />
+
+                <h:outputLabel for="password" value="Password:" />
+                <h:inputSecret id="password"  value="#{loginBean.userPassword}" required="true" />
+
+                <h:message for="username" />
+                <h:message for="password" />
+
+                <h:commandButton value="Let me in." action="#{loginBean.authenticateUser(user)}" styleClass="btn btn-primary btn-block btn-large"/>
 
                 <div class="login-help">
                     <p>Forgot your password? <a href="#">Click here to reset it</a>.</p>
                 </div>
-            </form>
+            </h:form>
         </div>
     </h:body>
 </html>
-

@@ -6,89 +6,66 @@ import com.uog.exam.entity.CourseEntity;
 import com.uog.exam.entity.CourseRegistrationEntity;
 import com.uog.exam.entity.StudentEntity;
 import com.uog.exam.student.CourseRegisterManagerRemote;
+import com.uog.exam.student.DatabaseInconsistentStateException;
+import com.uog.exam.student.StudentManager;
 import com.uog.exam.student.StudentManagerRemote;
 import com.uog.exam.student.StudentNotFoundException;
+import com.uog.exam.student.WrongParameterException;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
 @ViewScoped
 public class CourseRegistrationBean implements Serializable {
 
     @EJB
-    private CourseRegisterManagerRemote registerManagerRemote;
+    CourseRegisterManagerRemote registerManagerRemote;
 
     @EJB
-    private StudentManagerRemote studentManagerRemote;
+    StudentManagerRemote studentManagerRemote;
 
     @EJB
-    private CourseManagerRemote courseManaagerRemote;
+    CourseManagerRemote courseManaagerRemote;
 
+    private StudentEntity stdID;
+    private CourseEntity courseID;
+    private String courseRegYear;
+    private String studentId;
+    private String courseId;
 
+    public String getStudentId() {
+        return studentId;
+    }
 
-        // ...
-        private StudentEntity studentID;
-        private CourseEntity courseID;
-        private String courseRegYear;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
 
-        // ...
-        public void assignCourseToStudent() {
-            // Create a new CourseRegistrationEntity and set the student, course, and courseRegYear
-            CourseRegistrationEntity courseRegistrationEntity = new CourseRegistrationEntity();
-            courseRegistrationEntity.setCourseRegStudentID(studentID);
-            courseRegistrationEntity.setCourseRegCourseID(courseID);
-            courseRegistrationEntity.setCourseRegYear(courseRegYear);
+    public String getCourseId() {
+        return courseId;
+    }
 
-            // Call the register method in your registerManagerRemote to store the course registration
-            try {
-                registerManagerRemote.registerSudentInCourse(studentID, courseID, courseRegYear);
-
-                System.out.println("Course assigned to student successfully!");
-
-            } catch (com.uog.exam.student.WrongParameterException ex) {
-                System.out.println("Course assigned to student is unsuccessful.");
-                Logger.getLogger(CourseRegistrationBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        // Getters and Setters
-        public StudentEntity getStudent() {
-            return studentID;
-        }
-
-        public void setStudent(StudentEntity student) {
-            this.studentID = student;
-        }
-
-        public CourseEntity getCourse() {
-            return courseID;
-        }
-
-        public void setCourse(CourseEntity course) {
-            this.courseID = course;
-        }
-
-        public String getCourseRegYear() {
-            return courseRegYear;
-        }
-
-        public void setCourseRegYear(String courseRegYear) {
-            this.courseRegYear = courseRegYear;
-        }
-
-
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+    private boolean globalFilterOnly;
     private List<StudentEntity> studentList;
     private List<CourseEntity> courseList;
+    private List<CourseRegistrationEntity> allRegisterList;
 
     @PostConstruct
     public void init() {
+        setGlobalFilterOnly(false);
         try {
             studentList = studentManagerRemote.getAllStudents();
             courseList = courseManaagerRemote.getAllCourses();
@@ -97,47 +74,133 @@ public class CourseRegistrationBean implements Serializable {
         }
     }
 
+    public void registerStudentInCourse(StudentEntity student, CourseEntity course) {
+        try {
+
+            student = studentManagerRemote.getStudentByRollNo(studentId);
+
+            course = courseManaagerRemote.getCourseByCourseCode(courseId);
+
+            boolean alreadyRegistered = isAlreadyRegistered(student, course); // Check if student is already registered for the course
+
+            if (alreadyRegistered == true) {
+
+                System.out.println("Student is already registered...");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration Error", "Student is already registered for this course."));
+
+            } else {
+
+                CourseRegistrationEntity register = registerManagerRemote.registerStudentInCourse(student, course, courseRegYear);
+                System.out.println("Student roll no : " + student.getStudentRollNo());
+                System.out.println("student name : " + student.getStudentName());
+                System.out.println("Course Code : " + course.getCourseCode());
+                System.out.println("Course Title : " + course.getCourseTitle());
+
+                if (register == null) {
+                    System.out.println("Student is not registered in course!");
+
+                } else {
+                    System.out.println("Successfully registered.");
+                }
+            }
+        } catch (StudentNotFoundException | CourseNotFoundException | DatabaseInconsistentStateException | WrongParameterException ex) {
+            System.out.println("Failed to register student in a course");
+            Logger.getLogger(CourseRegistrationBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //Helper method...
+    private boolean isAlreadyRegistered(StudentEntity student, CourseEntity course) {
+
+        try {
+            List<CourseRegistrationEntity> registrations = registerManagerRemote.getAllRegisteredCourse();
+
+            for (CourseRegistrationEntity register : registrations) {
+
+                if (register.getCourseRegStudentID().equals(student) && register.getCourseRegCourseID().equals(course)) {
+
+                    //System.out.println("Student is already registered in this course!");
+                    return true;
+                }
+            }
+        } catch (StudentNotFoundException ex) {
+            Logger.getLogger(CourseRegistrationBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 //    public void assignCourseToStudent() {
-//        System.out.println("Course is being offering to students");
 //        CourseRegistrationEntity courseRegistrationEntity = null;
 //        try {
-//            courseRegistrationEntity = registerManagerRemote.registerSudentInCourse(studentEntity, courseEntity, courseRegYear);
+//            courseRegistrationEntity = registerManagerRemote.registerStudentInCourse(stdID, courseID, courseRegYear);
+//
+//            allRegisterList.add(courseRegistrationEntity);
 //        } catch (com.uog.exam.student.WrongParameterException ex) {
 //            Logger.getLogger(CourseRegistrationBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        if (courseRegistrationEntity != null) {
-//            System.out.println("Course is assigned to student successfully!");
-//            // Reset the input fields
-//            
-//            courseRegYear = null;
+//            System.out.println("Course is assigned to the student successfully!");
 //        } else {
 //            System.out.println("An error occurred while assigning the course to the student.");
 //        }
 //    }
-    // Getters and Setters
-//    public StudentEntity getStdID() {
-//        return studentEntity;
-//    }
+//    public void registerStudent() {
+//        // Get the student and course based on the selected IDs
+//        StudentEntity selectedStudent = studentList.stream()
+//                .filter(s -> s.getStudentID() == studentId)
+//                .findFirst()
+//                .orElse(null);
+//        CourseEntity selectedCourse = courseList.stream()
+//                .filter(c -> c.getCourseID() == courseId)
+//                .findFirst()
+//                .orElse(null);
+//        String year = null;
 //
-//    public void setStdID(StudentEntity stdID) {
-//        this.studentEntity = stdID;
-//    }
+//        if (selectedStudent != null && selectedCourse != null) {
+//            // Register the student in the course using the registration service
+//            if (year != null) {
 //
-//    public CourseEntity getCourseID() {
-//        return courseEntity;
+//                registerStudentInCourse(selectedStudent, selectedCourse, year);
+//            }
+//            // Clear the form fields after successful registration
+//            studentId = 0;
+//            courseId = 0;
+//        } else {
+//            // Handle error scenario (e.g., selected student or course not found)
+//        }
 //    }
-//
-//    public void setCourseID(CourseEntity courseID) {
-//        this.courseEntity = courseID;
-//    }
-//
-//    public String getCourseRegYear() {
-//        return courseRegYear;
-//    }
-//
-//    public void setCourseRegYear(String courseRegYear) {
-//        this.courseRegYear = courseRegYear;
-//    }
+
+    public boolean isGlobalFilterOnly() {
+        return globalFilterOnly;
+    }
+
+    public void setGlobalFilterOnly(boolean globalFilterOnly) {
+        this.globalFilterOnly = globalFilterOnly;
+    }
+
+    public StudentEntity getStdID() {
+        return stdID;
+    }
+
+    public void setStdID(StudentEntity stdID) {
+        this.stdID = stdID;
+    }
+
+    public CourseEntity getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(CourseEntity courseID) {
+        this.courseID = courseID;
+    }
+
+    public String getCourseRegYear() {
+        return courseRegYear;
+    }
+
+    public void setCourseRegYear(String courseRegYear) {
+        this.courseRegYear = courseRegYear;
+    }
+
     public List<StudentEntity> getStudentList() {
         return studentList;
     }
@@ -145,4 +208,9 @@ public class CourseRegistrationBean implements Serializable {
     public List<CourseEntity> getCourseList() {
         return courseList;
     }
+
+    public List<CourseRegistrationEntity> getAllRegisterList() {
+        return allRegisterList;
+    }
+
 }
